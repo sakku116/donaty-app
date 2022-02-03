@@ -1,0 +1,30 @@
+<SearchButton@Button>:
+    # @Button
+    size_hint: None, None
+    width: 32
+    height: 32
+
+    background_color: (1,1,1,0)
+    background_normal: ''
+
+    feedback_size: 26
+    
+    canvas.after:
+        #Color:
+        #    rgba: (1,0,0,1)
+        #Line:
+        #    rectangle: self.x, self.y, self.width, self.height
+
+        Color: 
+            rgba: (0,0,0,0 if self.state == 'normal' else .05)
+        RoundedRectangle:
+            size: [self.feedback_size + self.feedback_size/1.2, self.feedback_size + self.feedback_size/1.2]
+            pos: [self.center_x - (self.feedback_size + self.feedback_size/1.2)/2, self.center_y - (self.feedback_size + self.feedback_size/1.2)/2]
+            radius: [self.feedback_size/3]
+
+    Image:
+        source: './assets/magnify-glass.png'
+        allow_stretch: True
+
+        pos: self.parent.pos
+        size: self.parent.size

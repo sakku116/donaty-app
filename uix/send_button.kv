@@ -1,0 +1,70 @@
+<SendButton@Button>:
+    # @Button
+    # dapat digunakan untuk tombol send di screen 2
+    text: ''
+    color: (0,0,0,0)
+
+    size_hint: 1, None
+    height: 68
+
+    pos_hint: {'center_x':.5, 'center_y':.5}
+
+    background_normal: ''
+    background_color: (0,0,0,0)
+
+    FloatLayout:
+        size: self.parent.size
+        pos: self.parent.pos
+
+        # Background Canvas
+        Widget:
+            size_hint: None, None
+            width: self.parent.width - 10
+            height: 64
+
+            pos: self.parent.pos
+            pos_hint: {'bottom':1, 'right':1}
+
+            canvas.before:
+                Color:
+                    rgba: (0,0,0,1)
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: [5]
+
+        # Foreground Canver
+        Label:
+            id: fg_button
+
+            text: root.text
+            font_size: 18
+            font_name: './assets/fonts/Quicksand/Quicksand-SemiBold.ttf'
+
+            size_hint: None, None
+            width: self.parent.width - 9
+            height: 60
+
+            pos: self.parent.pos
+            mxa: self.parent.width/(9/100)
+            mx: 0
+            my: 1
+            border_line: 4
+            radius: 5
+            pos_hint: {'top':self.my, 'x':self.mx}
+
+            canvas.before:
+                Color:
+                    rgba: (0,0,0,1)
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: [self.radius]
+
+                # main canvas
+                Color:
+                    rgba: (239/255, 105/255, 137/255, 1) if root.state == 'normal' else (248/255, 133/255, 161/255, 1)
+                RoundedRectangle:
+                    size: [self.width-self.border_line, self.height-self.border_line]
+                    pos: [self.x+self.border_line/2, self.y+self.border_line/2]
+                    radius: [self.radius-2.5]

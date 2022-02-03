@@ -1,0 +1,102 @@
+############# SCREENS #############
+#:include screens/first_screen.kv
+#:include screens/second_screen.kv
+
+############# UIX #############
+#:include uix/menu_button.kv
+#:include uix/search_button.kv
+#:include uix/paymtd_label.kv
+#:include uix/getStarted_button.kv
+#:include uix/send_button.kv
+#:include uix/loginInput_field.kv
+#:include uix/screen_barrier.kv
+#:include uix/donate_card.kv
+#:include uix/navBar_button.kv
+#:include uix/profile_card.kv
+#:include uix/popup.kv
+
+<Manager>:
+    # manager mencakup header untuk kedua screen
+    # dan juga sebagai tempat untuk pergantian layout screen 1 dan 2
+    GridLayout:
+        cols: 1
+        size: root.width, root.height
+
+        canvas.before:
+            Color:
+                rgba: (251, 251, 251, 1) # main background color
+            Rectangle:
+                size: self.size
+                pos: self.pos
+
+        # HEADER
+        BoxLayout:
+            padding: [30, 10, 30, 15]
+
+            size_hint: 1, None
+            height: 54
+
+            FloatLayout:
+                #canvas.before:
+                #    Color:
+                #        rgba: (0,0,0,1)
+                #    Line:
+                #        width: 1
+                #        rectangle: self.x, self.y, self.width, self.height
+
+                MenuButton: # 3 line button
+                    id: manager_menu_btn
+                    pos: self.parent.pos
+                    pos_hint: {'center_y':.4}
+
+                # donaty text & logo
+                BoxLayout:
+                    orientation: 'horizontal'
+                    spacing: 8
+
+                    pos: self.parent.pos
+                    pos_hint: {'center_y':.5, 'center_x':.5}
+
+                    size_hint: None, 1
+                    width: self.minimum_width
+
+                    Label:
+                        text: 'Donaty'
+                        font_size: 30
+                        font_name: './assets/fonts/Neuton/Neuton-Regular.ttf'
+                        color: (0,0,0,1)
+
+                        # untuk mendapatkan nilai minimum size dari Label
+                        size_hint: None, None
+                        width: self.texture_size[0]
+                        height: self.texture_size[1]
+
+                        pos_hint: {'center_y':.5, 'center_x':.5}
+
+                    Image:
+                        source: './assets/donate-heart.png'
+
+                        pos: self.parent.pos
+                        pos_hint: {'center_y':.5, 'center_x':.5}
+
+                        size_hint: None, None
+                        width: 27
+                        height: 27
+                        allow_stretch: True
+
+                SearchButton:
+                    id: manager_search_btn
+                    pos: self.parent.pos
+                    pos_hint: {'center_y':.4, 'right':1}
+
+        # CONTENT LAYOUT PLACE
+        FloatLayout:
+
+            BoxLayout:
+                id: first_screen_place
+
+            BoxLayout:
+                id: second_screen_place
+
+    FloatLayout:
+        id: popup_place

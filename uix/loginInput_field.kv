@@ -1,0 +1,41 @@
+<LoginInputField@FloatLayout>:
+    size_hint: None, None
+    width: 324
+    height: 69
+
+    hint_text: ''
+    password: False
+
+    text: self.ids.input_field.text
+
+    Widget:
+        size: self.parent.size
+        pos: self.parent.pos
+        canvas.before:
+            Color: 
+                rgba: (3/255, 41/255, 68/255, 1)
+            RoundedRectangle:
+                size: self.size
+                pos: self.pos
+                radius: [5]
+
+    TextInput:
+        id: input_field
+        padding: [24,25,24,0]
+        hint_text: self.parent.hint_text
+        hint_text_color: (1,1,1,.6)
+        foreground_color: (1,1,1,1)
+        cursor_color: (239/255, 105/255, 137/255, 1)
+        multiline: False
+        font_size: '20sp'
+        font_name: './assets/fonts/Roboto/Roboto-Regular.ttf'
+
+        password: self.parent.password
+
+        pos: self.parent.pos
+        pos_hint: {'center_y':.5}
+
+        size: self.parent.size
+
+        background_color: (0,0,0,0)
+        background_normal: ''

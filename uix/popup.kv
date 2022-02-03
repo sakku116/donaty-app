@@ -1,0 +1,88 @@
+<MyPopup>:
+    #@Button
+    id: popup
+
+    size_hint: 1, None
+    #width: 300
+    height: 200
+
+    title: ''
+    message: ''
+
+    pos_hint: {'top':self.my_top}
+    my_top: 1.5
+
+    background_color: (0,0,0,0)
+    background_normal: ''
+
+    border_line: 4
+    radius: 25
+
+    canvas.before:
+        Color:
+            rgba: (0,0,0,1)
+        RoundedRectangle:
+            size: [self.width, self.height-self.border_line]
+            pos: [self.x, self.y+self.border_line/2]
+            radius: [0,0,self.radius,self.radius]
+
+        Color:
+            rgba: (1,1,1,1)
+        RoundedRectangle:
+            size: [self.width-self.border_line, self.height-self.border_line]
+            pos: [(self.x+self.border_line/2), (self.y+self.border_line)]
+            radius: [0,0,self.radius-2.5,self.radius-2.5]
+
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 20
+
+        pos: self.parent.pos
+        size: self.parent.size
+
+        # Title
+        Label:
+            text: root.title
+            font_name: './assets/fonts/Poppins/Poppins-Medium.ttf'
+            font_size: 17
+            color: (0,0,0,1)
+
+            size_hint_y: None
+            height: 30
+
+            text_size: self.size
+            valign: 'top'
+            halign: 'center'
+
+        # Line Sparator
+        Widget:
+            size_hint_y: None
+            height: 2
+
+            canvas.before:
+                Color:
+                    rgba: (0,0,0,.4)
+                RoundedRectangle:
+                    size: [self.width, self.height]
+                    pos: self.pos
+                    radius: [self.height/2]
+
+        # Message of popup
+        Label:
+            markup: True
+            text: root.message
+            color: (0,0,0,1)
+            multiline: True
+            font_name: './assets/fonts/Quicksand/Quicksand-Medium.ttf'
+            font_size: 16
+
+            text_size: self.size
+            valign: 'center'
+            halign: 'center'
+
+            canvas.before:
+                Color:
+                    rgba: (0,0,0,0)
+                Rectangle:
+                    size: self.size
+                    pos: self.pos

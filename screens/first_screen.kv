@@ -1,0 +1,252 @@
+<FirstScreen>
+    FloatLayout:
+        size: root.width, root.height
+
+        canvas.before:
+            Color:
+                rgba: (0,0,0,0)
+            Rectangle:
+                size: self.size
+                pos: self.pos
+
+        ScrollView:
+            do_scroll_x: False
+            do_scroll_y: False
+
+            #effect_cls: 'ScrollEffect'
+
+            BoxLayout: # scrollview container
+                orientation: 'vertical'
+                spacing: 10
+
+                size_hint: 1, None
+                height: self.minimum_height
+
+                # TITLE HEADER
+                BoxLayout:
+                    orientation: 'vertical'
+
+                    padding: [30, 20, 30, 10]
+                    spacing: 15
+
+                    size_hint: 1, None
+                    height: self.minimum_height
+
+                    Label:
+                        text: 'Support Your Creator Anytime And Anywhere Very Easily'
+                        font_name: './assets/fonts/Poppins/Poppins-Medium.ttf'
+                        line_height: '1.1'
+                        font_size: '25sp'
+                        color: (0,0,0,1)
+
+                        size_hint: 1, None
+                        height: self.texture_size[1]
+
+                        # untuk mendapatkan minimum width + minimum width yang
+                        # support multiline (adaptif), text_size juga
+                        # perlu diberi value yang spesifik berdasarkan
+                        # size_hint
+
+                        text_size: self.width, None
+                        valign: 'top'
+                        halign: 'left'
+
+                    Label:
+                        text: 'Your support is very usefull'
+                        color: (0,0,0,1)
+                        font_size: '18sp'
+
+                        size_hint: 1, None
+                        height: self.texture_size[1]
+
+                        text_size: self.width, None
+                        valign: 'top'
+                        halign: 'left'
+
+                # HORIZONTAL PAYMENT METHOD BUTTON
+                BoxLayout:
+                    orientation: 'vertical'
+
+                    size_hint: 1, None
+                    height: 85
+
+                    ScrollView:
+                        do_scroll_x: True
+                        do_scroll_y: False
+                        effect_cls: 'ScrollEffect'
+
+                        bar_color: (1,1,1,0)
+                        bar_inactive_color: (1,1,1,0)
+
+                        size_hint: 1, None
+                        height: paymtd_button_container.height
+
+                        BoxLayout:
+                            id: paymtd_button_container
+                            orientation: 'horizontal'
+                            padding: [30,0,30,0]
+                            spacing: 25
+
+                            size_hint: None, None
+                            height: self.minimum_height
+                            width: self.minimum_width
+
+                            PaymtdLabel:
+                                text: 'PAYPAL'
+                                icon: './assets/paypal.png'
+                                icon_bg: (206/255, 216/255, 255/255, 1)
+                                #on_release: app.root.showLoginForm()
+
+                            PaymtdLabel:
+                                text: 'VISA'
+                                icon: './assets/visa.png'
+                                icon_bg: (255/255, 185/255, 202/255, 1)
+                                #on_release: app.root.showLoginForm()
+
+        # BARRIER PLACE
+        BoxLayout:
+            id: barrier_place
+
+        # LOGIN FORM
+        FloatLayout:
+            id: login_form
+            size_hint: 1, None
+            height: 448
+
+            orientation: 'vertical'
+
+            my: -.5
+            pos_hint: {'y':self.my}
+
+            radius: 30
+            border_line: 4
+
+            canvas.before:
+                Color:
+                    rgba: (0,0,0,1)
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: [self.radius]
+
+                Color:
+                    rgba: (1,1,1,1)
+                RoundedRectangle:
+                    size: [self.width-self.border_line, self.height-self.border_line]
+                    pos: [(self.x+self.border_line/2), (self.y+self.border_line/2)]
+                    radius: [self.radius-2.5]
+
+            Button:
+                # barrier agar tidak tembus dengan button barrier di belakangnya
+                pos: self.parent.pos
+
+                background_normal: ''
+                background_color: (0,0,0,0)
+
+            BoxLayout:
+                orientation: 'vertical'
+                pos: self.parent.pos
+
+                padding: [30,10,30,10]
+                spacing: 28
+
+                Button: # Line sparator
+                    id: line_sparator_login_form
+
+                    size_hint: None,None
+                    width: 101
+                    height: 4
+
+                    background_color: (0,0,0,0)
+                    background_normal: ''
+
+                    pos: self.parent.pos
+                    pos_hint: {'center_x':.5}
+
+                    canvas.before:
+                        Color:
+                            rgba: (0,0,0,1) if self.state == 'normal' else (0,0,1,.7)
+                        RoundedRectangle:
+                            size: self.size
+                            pos: self.pos
+                            radius: [self.height/2]
+
+                FloatLayout:
+                    pos: self.parent.pos
+
+                    BoxLayout:
+                        orientation: 'vertical'
+                        spacing: 20
+
+                        size_hint: None, None
+                        width: self.minimum_width
+                        height: self.minimum_height
+
+                        pos: self.parent.pos
+                        pos_hint: {'center_x':.5, 'top':1}
+
+                        Label:
+                            text: 'Email Address'
+                            font_name: './assets/fonts/Roboto/Roboto-Regular.ttf'
+                            font_size: '20sp'
+                            color: (0,0,0,1)
+
+                            size_hint: 1, None
+                            height: self.texture_size[1]
+
+                            text_size: self.width, None
+                            valign: 'center'
+                            halign: 'left'
+
+                        LoginInputField:
+                            id: email_login_field
+                            hint_text: 'YOUR EMAIL ADDRESS'
+
+                        Label:
+                            text: 'Password'
+                            font_name: './assets/fonts/Roboto/Roboto-Regular.ttf'
+                            font_size: '20sp'
+                            color: (0,0,0,1)
+
+                            size_hint: 1, None
+                            height: self.texture_size[1]
+
+                            text_size: self.width, None
+                            valign: 'center'
+                            halign: 'left'
+
+                        LoginInputField:
+                            id: password_login_field
+                            hint_text: 'PASSWORD'
+                            password: True
+
+        # BOTTOM SPACE (floating)
+        FloatLayout:
+            size_hint: 1, None
+            height: 135
+
+            canvas.before:
+                Color:
+                    rgba: (3/255, 41/255, 68/255, 1)
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: [20,20,0,0]
+
+            GetStartedButton:
+                id: get_started_btn
+                text: 'Get Started'
+
+            Label:
+                text: 'Design by Andre Rio'
+                color: (1,1,1,.1)
+                font_size: '13.5sp'
+                font_name: './assets/fonts/Poppins/Poppins-Regular.ttf'
+
+                size_hint: None, None
+                width: self.texture_size[0] + 25
+                height: self.texture_size[1] + 10
+
+                text_size: None, None
+                valign: 'center'
+                halign: 'center'

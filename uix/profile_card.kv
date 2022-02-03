@@ -1,0 +1,138 @@
+<ProfileCard>:
+    #@FloatLayout
+    size_hint: 1, None
+    height: 75
+    
+    radius: 10
+    border_line: 3
+
+    person_name: 'Unknown'
+    person_pict: ''
+    person_role: 'Unknown'
+    
+    canvas.before:
+        Color: 
+            rgba: (0,0,0,1)
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: [self.radius]
+            
+        Color:
+            rgba: (244/255, 244/255, 244/255, 1)
+        RoundedRectangle:
+            size: [(self.width-self.border_line), (self.height-self.border_line)]
+            pos: [(self.x+self.border_line/2), (self.y+self.border_line/2)]
+            radius: [self.radius-2.5]
+
+    BoxLayout: # profile section
+        size_hint: 1, None
+        height: self.minimum_height
+
+        spacing: 9
+        padding: [20,0,20,0]
+
+        pos: self.parent.pos
+        pos_hint: {'center_x':.5, 'center_y':.5}
+
+        Widget: # photo profile
+            size_hint: None, None
+            width: 49
+            height: 49
+
+            source: root.person_pict
+
+            canvas.before:
+                Color:
+                    rgba: (1,1,1,1)
+                Ellipse:
+                    size: self.size
+                    pos: self.pos
+                    source: self.source
+
+                Color:
+                    rgba: (0,0,0,1)
+                Line:
+                    width: 1
+                    ellipse: self.x, self.y, self.width, self.height
+
+        FloatLayout: # creator name container
+            id: person_name_container
+
+            size_hint: None, 1
+            width: 120
+            
+            BoxLayout:
+                orientation: 'vertical'
+
+                size_hint: 1, None
+                height: self.minimum_height
+
+                #spacing: 7
+
+                pos: self.parent.pos
+                pos_hint: {'center_y':.55}
+                
+                canvas.before:
+                    Color:
+                        rgba: (0,0,0,0)
+                    Line:
+                        rectangle: self.x, self.y, self.width, self.height
+
+                Label: # name
+                    id: person_name
+                    text: root.person_name
+                    color: (0,0,0,1)
+                    font_name: './assets/fonts/Poppins/Poppins-Medium.ttf'
+                    font_size: 17
+                    line_height: .8
+
+                    size_hint: 1, None
+                    height: self.texture_size[1]
+
+                    text_size: self.width, None
+                    valign: 'top'
+                    halign: 'left'
+
+                Label:
+                    text: root.person_role
+                    color: (0,0,0,.6)
+                    font_size: '12sp'
+                    font_name: './assets/fonts/Roboto/Roboto-Regular.ttf'
+
+                    size_hint: None,None
+                    width: self.texture_size[0]
+                    height: self.texture_size[1]
+
+                    text_size: None, None
+                    valign: 'top'
+                    halign: 'left'
+
+        FloatLayout:
+            Button:
+                id: pick_person_btn
+                text: 'Donate'
+                font_size: '13sp'
+                font_name: './assets/fonts/Roboto/Roboto-Medium.ttf'
+
+                size_hint: None, None
+                width: 93
+                height: 39
+
+                pos: self.parent.pos
+                pos_hint: {'right':1, 'center_y':.5}
+
+                background_color: (0,0,0,0)
+                background_normal: ''
+
+                #on_release: root.picked_person(root.person_name, root.person_role, root.person_pict)
+
+                canvas.before:
+                    Color:
+                        rgba: (239/255, 105/255, 137/255, 1 if self.state == 'normal' else .8)
+                    RoundedRectangle:
+                        size: self.size
+                        pos: self.pos
+                        radius: [5]
+
+        

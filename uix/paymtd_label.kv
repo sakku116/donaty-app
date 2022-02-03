@@ -1,0 +1,85 @@
+<PaymtdLabel>:
+    # Label
+    text: self.text
+
+    icon: ''
+    icon_bg: (0,0,0,0)
+
+    color: (0,0,0,0)
+
+    size_hint: None, None
+    width: 180
+    height: 77
+
+    bg_color: (241/255, 241/255, 241/255, 1)
+
+    #on_press: root.pressed()
+    #on_release: root.released()
+
+    canvas.before:
+        Color:
+            rgba: self.bg_color
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: [15]
+
+    BoxLayout:
+        orientation: 'horizontal'
+        spacing: 5
+
+        #source: self.parent.source
+        text: self.parent.text
+        icon: self.parent.icon
+        
+        pos: self.parent.pos
+        size: self.parent.size
+
+        # ICON
+        FloatLayout: 
+            pos: self.parent.pos
+            size_hint: None, 1
+            width: self.parent.width/2.5
+
+            icon: self.parent.icon
+
+            Widget: # background
+                size_hint: None, None
+                width: 46
+                height: 46
+
+                pos: self.parent.pos
+                pos_hint: {'center_x':.5, 'center_y':.5}
+
+                canvas.before:
+                    Color:
+                        rgba: root.icon_bg
+                    Ellipse:
+                        size: self.size
+                        pos: [self.center_x - self.width/2, self.center_y - self.height/2]
+            
+            Image:
+                source: self.parent.icon
+
+                allow_stretch: True
+
+                pos: self.parent.pos
+                pos_hint: {'center_x':.5, 'center_y':.5}
+
+                size_hint: None, None
+                width: 28
+                height: 28
+
+        Label:
+            text: self.parent.text
+            font_size: '20sp'
+            color: (0,0,0,.6)
+
+            size_hint: None, 1
+            width: self.texture_size[0]
+
+            text_size: None, self.height
+            valign: 'center'
+            halign: 'left'
+
+            
