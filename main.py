@@ -2,6 +2,8 @@
 C:/py_venv/kivy_venv/scripts/activate
 '''
 
+# test commit
+
 '''
 # konfigurasi untuk openGl dibawah versi 2
 from kivy import Config
