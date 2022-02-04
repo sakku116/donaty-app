@@ -103,122 +103,122 @@
                                 icon_bg: (255/255, 185/255, 202/255, 1)
                                 #on_release: app.root.showLoginForm()
 
-        # BARRIER PLACE
+    # BARRIER PLACE
+    BoxLayout:
+        id: barrier_place
+
+    # LOGIN FORM
+    FloatLayout:
+        id: login_form
+        size_hint: 1, None
+        height: 448
+
+        orientation: 'vertical'
+
+        my: -.5
+        pos_hint: {'y':self.my}
+
+        radius: 30
+        border_line: 4
+
+        canvas.before:
+            Color:
+                rgba: (0,0,0,1)
+            RoundedRectangle:
+                size: self.size
+                pos: self.pos
+                radius: [self.radius]
+
+            Color:
+                rgba: (1,1,1,1)
+            RoundedRectangle:
+                size: [self.width-self.border_line, self.height-self.border_line]
+                pos: [(self.x+self.border_line/2), (self.y+self.border_line/2)]
+                radius: [self.radius-2.5]
+
+        Button:
+            # barrier agar tidak tembus dengan button barrier di belakangnya
+            pos: self.parent.pos
+
+            background_normal: ''
+            background_color: (0,0,0,0)
+
         BoxLayout:
-            id: barrier_place
-
-        # LOGIN FORM
-        FloatLayout:
-            id: login_form
-            size_hint: 1, None
-            height: 448
-
             orientation: 'vertical'
+            pos: self.parent.pos
 
-            my: -.5
-            pos_hint: {'y':self.my}
+            padding: [30,10,30,10]
+            spacing: 28
 
-            radius: 30
-            border_line: 4
+            Button: # Line sparator
+                id: line_sparator_login_form
 
-            canvas.before:
-                Color:
-                    rgba: (0,0,0,1)
-                RoundedRectangle:
-                    size: self.size
-                    pos: self.pos
-                    radius: [self.radius]
+                size_hint: None,None
+                width: 101
+                height: 4
 
-                Color:
-                    rgba: (1,1,1,1)
-                RoundedRectangle:
-                    size: [self.width-self.border_line, self.height-self.border_line]
-                    pos: [(self.x+self.border_line/2), (self.y+self.border_line/2)]
-                    radius: [self.radius-2.5]
-
-            Button:
-                # barrier agar tidak tembus dengan button barrier di belakangnya
-                pos: self.parent.pos
-
-                background_normal: ''
                 background_color: (0,0,0,0)
+                background_normal: ''
 
-            BoxLayout:
-                orientation: 'vertical'
+                pos: self.parent.pos
+                pos_hint: {'center_x':.5}
+
+                canvas.before:
+                    Color:
+                        rgba: (0,0,0,1) if self.state == 'normal' else (0,0,1,.7)
+                    RoundedRectangle:
+                        size: self.size
+                        pos: self.pos
+                        radius: [self.height/2]
+
+            FloatLayout:
                 pos: self.parent.pos
 
-                padding: [30,10,30,10]
-                spacing: 28
+                BoxLayout:
+                    orientation: 'vertical'
+                    spacing: 20
 
-                Button: # Line sparator
-                    id: line_sparator_login_form
-
-                    size_hint: None,None
-                    width: 101
-                    height: 4
-
-                    background_color: (0,0,0,0)
-                    background_normal: ''
+                    size_hint: None, None
+                    width: self.minimum_width
+                    height: self.minimum_height
 
                     pos: self.parent.pos
-                    pos_hint: {'center_x':.5}
+                    pos_hint: {'center_x':.5, 'top':1}
 
-                    canvas.before:
-                        Color:
-                            rgba: (0,0,0,1) if self.state == 'normal' else (0,0,1,.7)
-                        RoundedRectangle:
-                            size: self.size
-                            pos: self.pos
-                            radius: [self.height/2]
+                    Label:
+                        text: 'Email Address'
+                        font_name: './assets/fonts/Roboto/Roboto-Regular.ttf'
+                        font_size: '20sp'
+                        color: (0,0,0,1)
 
-                FloatLayout:
-                    pos: self.parent.pos
+                        size_hint: 1, None
+                        height: self.texture_size[1]
 
-                    BoxLayout:
-                        orientation: 'vertical'
-                        spacing: 20
+                        text_size: self.width, None
+                        valign: 'center'
+                        halign: 'left'
 
-                        size_hint: None, None
-                        width: self.minimum_width
-                        height: self.minimum_height
+                    LoginInputField:
+                        id: email_login_field
+                        hint_text: 'YOUR EMAIL ADDRESS'
 
-                        pos: self.parent.pos
-                        pos_hint: {'center_x':.5, 'top':1}
+                    Label:
+                        text: 'Password'
+                        font_name: './assets/fonts/Roboto/Roboto-Regular.ttf'
+                        font_size: '20sp'
+                        color: (0,0,0,1)
 
-                        Label:
-                            text: 'Email Address'
-                            font_name: './assets/fonts/Roboto/Roboto-Regular.ttf'
-                            font_size: '20sp'
-                            color: (0,0,0,1)
+                        size_hint: 1, None
+                        height: self.texture_size[1]
 
-                            size_hint: 1, None
-                            height: self.texture_size[1]
+                        text_size: self.width, None
+                        valign: 'center'
+                        halign: 'left'
 
-                            text_size: self.width, None
-                            valign: 'center'
-                            halign: 'left'
-
-                        LoginInputField:
-                            id: email_login_field
-                            hint_text: 'YOUR EMAIL ADDRESS'
-
-                        Label:
-                            text: 'Password'
-                            font_name: './assets/fonts/Roboto/Roboto-Regular.ttf'
-                            font_size: '20sp'
-                            color: (0,0,0,1)
-
-                            size_hint: 1, None
-                            height: self.texture_size[1]
-
-                            text_size: self.width, None
-                            valign: 'center'
-                            halign: 'left'
-
-                        LoginInputField:
-                            id: password_login_field
-                            hint_text: 'PASSWORD'
-                            password: True
+                    LoginInputField:
+                        id: password_login_field
+                        hint_text: 'PASSWORD'
+                        password: True
 
     FloatLayout:
         id: screen1_sidebar_place
@@ -229,6 +229,36 @@
             Rectangle:
                 size: self.size
                 pos: self.pos
+
+        # sidebar
+        Button: # @barrier
+            size_hint: None, 1
+            width: 300
+
+            background_color: (0,0,0,0)
+            background_normal: ''
+
+            pos_hint: {'x':self.myX}
+            # 0 for spawned
+            # -1 for unspawned
+            myX: -1
+
+            canvas.before:
+                Color:
+                    rgba: (0,0,0,1)
+                Rectangle:
+                    size: self.size
+                    pos: [self.x+2, self.y]
+                    
+                Color:
+                    rgba: (1,1,1,1)
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+
+            BoxLayout:
+                size: self.parent.size
+                pos: self.parent.pos
 
     # BOTTOM SPACE (floating)
     FloatLayout:
