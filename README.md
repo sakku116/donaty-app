@@ -1,2 +1,2 @@
 # donaty-app
-slicing project for bang andre rio's ui design
+slicing project for bang @andregans 's ui design
