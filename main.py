@@ -35,7 +35,7 @@ from functools import partial
 # partial memungkinkan untuk memberi parameter saat bind function
 
 def printLog(type, text):
-    print(f'<{type}> = {text}')
+    print(f'({type}) = {text}')
 
 ############## SCREEN ##############
 
@@ -65,21 +65,6 @@ class Manager(Screen):
         ]
         self._selected_person = ''
 
-    def removePopup(self, barrier_instance, popup_instance, *args):
-        def remove(*args):
-            self.ids.popup_place.remove_widget(barrier_instance)
-            self.ids.popup_place.remove_widget(popup_instance)
-            printLog('popup', 'barrier & popup removed')
-
-        # animasikan sebelum dihapus
-        anim = Animation(
-            my_top = 1.5,
-            duration = .25,
-            t = 'out_circ'
-        )
-        anim.start(popup_instance)
-        anim.bind(on_complete = remove)
-
     def spawnPopup(self, title, message, *args):
         barrier = ScreenBarrier()
         popup = MyPopup()
@@ -98,8 +83,6 @@ class Manager(Screen):
             t = 'out_circ'
         ).start(popup)
 
-        printLog('popup', 'barrier & popup placed')
-
         # bind barrier ke removePopup
         barrier.bind(on_release =
             partial(
@@ -108,6 +91,23 @@ class Manager(Screen):
                 popup
             )
         )
+
+    def removePopup(self, barrier_instance, popup_instance, *args):
+        def remove(*args):
+            self.ids.popup_place.remove_widget(barrier_instance)
+            self.ids.popup_place.remove_widget(popup_instance)
+            printLog('popup', 'barrier & popup removed')
+
+        # animasikan sebelum dihapus
+        anim = Animation(
+            my_top = 1.5,
+            duration = .25,
+            t = 'out_circ'
+        )
+        anim.start(popup_instance)
+        anim.bind(on_complete = remove)
+
+        printLog('popup', 'barrier & popup placed')
 
     def goToFirstScreen(self, *args):
         pass
