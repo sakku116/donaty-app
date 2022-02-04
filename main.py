@@ -10,6 +10,8 @@ from kivy import require
 require('2.0.0')
 '''
 
+# eksperimen fetch
+
 from kivy.properties import NumericProperty
 from kivy.app import App
 from kivy.core.window import Window
