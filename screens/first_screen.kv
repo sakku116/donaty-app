@@ -220,33 +220,43 @@
                             hint_text: 'PASSWORD'
                             password: True
 
-        # BOTTOM SPACE (floating)
-        FloatLayout:
-            size_hint: 1, None
-            height: 135
+    FloatLayout:
+        id: screen1_sidebar_place
 
-            canvas.before:
-                Color:
-                    rgba: (3/255, 41/255, 68/255, 1)
-                RoundedRectangle:
-                    size: self.size
-                    pos: self.pos
-                    radius: [20,20,0,0]
+        canvas.before:
+            Color:
+                rgba: (1,0,0,0)
+            Rectangle:
+                size: self.size
+                pos: self.pos
 
-            GetStartedButton:
-                id: get_started_btn
-                text: 'Get Started'
+    # BOTTOM SPACE (floating)
+    FloatLayout:
+        size_hint: 1, None
+        height: 135
 
-            Label:
-                text: 'Design by Andre Rio'
-                color: (1,1,1,.1)
-                font_size: '13.5sp'
-                font_name: './assets/fonts/Poppins/Poppins-Regular.ttf'
+        canvas.before:
+            Color:
+                rgba: (3/255, 41/255, 68/255, 1)
+            RoundedRectangle:
+                size: self.size
+                pos: self.pos
+                radius: [20,20,0,0]
 
-                size_hint: None, None
-                width: self.texture_size[0] + 25
-                height: self.texture_size[1] + 10
+        GetStartedButton:
+            id: get_started_btn
+            text: 'Get Started'
 
-                text_size: None, None
-                valign: 'center'
-                halign: 'center'
+        Label:
+            text: 'Design by Andre Rio'
+            color: (1,1,1,.1)
+            font_size: '13.5sp'
+            font_name: './assets/fonts/Poppins/Poppins-Regular.ttf'
+
+            size_hint: None, None
+            width: self.texture_size[0] + 25
+            height: self.texture_size[1] + 10
+
+            text_size: None, None
+            valign: 'center'
+            halign: 'center'
