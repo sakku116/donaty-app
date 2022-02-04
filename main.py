@@ -34,8 +34,8 @@ from random import randint, sample
 from functools import partial
 # partial memungkinkan untuk memberi parameter saat bind function
 
-def printLog(type, text):
-    print(f'({type}) = {text}')
+def printLog(event, text):
+    print(f'({event}) = {text}')
 
 ############## SCREEN ##############
 
@@ -92,11 +92,13 @@ class Manager(Screen):
             )
         )
 
+        printLog('popup log', 'barrier & popup placed')
+
     def removePopup(self, barrier_instance, popup_instance, *args):
         def remove(*args):
             self.ids.popup_place.remove_widget(barrier_instance)
             self.ids.popup_place.remove_widget(popup_instance)
-            printLog('popup', 'barrier & popup removed')
+            printLog('popup log', 'barrier & popup removed')
 
         # animasikan sebelum dihapus
         anim = Animation(
@@ -106,8 +108,6 @@ class Manager(Screen):
         )
         anim.start(popup_instance)
         anim.bind(on_complete = remove)
-
-        printLog('popup', 'barrier & popup placed')
 
     def goToFirstScreen(self, *args):
         pass
