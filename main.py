@@ -287,6 +287,7 @@ class Manager(Screen):
             self.ids.manager_menu_btn.unbind(on_release = self.showScreen1Sidebar)
             self.ids.manager_menu_btn.bind(on_release = partial(self.closeScreen1Sidebar, barrier))
             barrier.bind(on_release = partial(self.closeScreen1Sidebar, barrier))
+            printLog('screen1 sidebar', 'Showed')
         
         anim.bind(on_complete = callback)
         
@@ -304,7 +305,8 @@ class Manager(Screen):
         def callback(*args):
             self.ids.manager_menu_btn.unbind(on_release = self.closeScreen1Sidebar)
             self.ids.manager_menu_btn.bind(on_release = self.showScreen1Sidebar)
-        
+            printLog('screen1 sidebar', 'Closed')
+            
         anim.bind(on_complete = callback)
         
     def loginAuth(self, *args):
