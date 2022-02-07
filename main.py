@@ -291,7 +291,6 @@ class Manager(Screen):
         anim.bind(on_complete = callback)
         
     def closeScreen1Sidebar(self, barrier, *args):
-        # test email notif
         screen1 = self._first_screen
         anim = Animation(
             myX = -1,
