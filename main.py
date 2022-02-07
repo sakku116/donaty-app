@@ -132,6 +132,9 @@ class Manager(Screen):
         # bind tombol yang ada di first_screen karena berbeda parent class dengan manager
         screen1.ids.get_started_btn.bind(on_release = self.showLoginForm)
         screen1.ids.line_sparator_login_form.bind(on_release = self.removeLoginForm)
+        
+        # bind tombol menu
+        self.ids.manager_menu_btn.bind(on_release = self.showScreen1Sidebar)
 
     def secondScreenSetup(self, *args):
         screen2 = self._second_screen
@@ -267,7 +270,43 @@ class Manager(Screen):
 
         screen2.ids.view_all_btn.unbind(on_release = self.showMorePeopleSection)
         screen2.ids.view_all_btn.bind(on_release = self.showLessPeopleSection)
-
+        
+    def showScreen1Sidebar(self, *args):
+        screen1 = self._first_screen
+        anim = Animation(
+            myX = 0,
+            duration = .2,
+            t = 'out_circ'
+        )
+        anim.start(self._first_screen.ids.sidebar)
+        
+        barrier = ScreenBarrier()
+        screen1.ids.screen1_sidebar_place.add_widget(barrier)
+        
+        def callback(*args):
+            self.ids.manager_menu_btn.unbind(on_release = self.showScreen1Sidebar)
+            self.ids.manager_menu_btn.bind(on_release = partial(self.closeScreen1Sidebar, barrier))
+            barrier.bind(on_release = partial(self.closeScreen1Sidebar, barrier))
+        
+        anim.bind(on_complete = callback)
+        
+    def closeScreen1Sidebar(self, barrier, *args):
+        screen1 = self._first_screen
+        anim = Animation(
+            myX = -1,
+            duration = .1,
+            t = 'out_circ'
+        )
+        anim.start(self._first_screen.ids.sidebar)
+        
+        screen1.ids.screen1_sidebar_place.remove_widget(barrier)
+        
+        def callback(*args):
+            self.ids.manager_menu_btn.unbind(on_release = self.closeScreen1Sidebar)
+            self.ids.manager_menu_btn.bind(on_release = self.showScreen1Sidebar)
+        
+        anim.bind(on_complete = callback)
+        
     def loginAuth(self, *args):
         screen1 = self._first_screen
 
