@@ -97,6 +97,40 @@
 
             BoxLayout:
                 id: second_screen_place
+                
+    FloatLayout:
+        id: sidebar_place
 
     FloatLayout:
         id: popup_place
+
+<Sidebar>
+    # @Button
+    id: sidebar
+    size_hint: None, 1
+    width: 300
+
+    background_color: (0,0,0,0)
+    background_normal: ''
+
+    pos_hint: {'x':self.myX}
+    # 0 for spawned
+    # -1 for unspawned
+    myX: -1
+
+    canvas.before:
+        Color:
+            rgba: (0,0,0,1)
+        Rectangle:
+            size: self.size
+            pos: [self.x+2, self.y]
+            
+        Color:
+            rgba: (1,1,1,1)
+        Rectangle:
+            size: self.size
+            pos: self.pos
+
+    BoxLayout:
+        size: self.parent.size
+        pos: self.parent.pos

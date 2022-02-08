@@ -18,6 +18,7 @@ from kivy.animation import Animation
 from kivy.clock import Clock
 # penggunaan Clock.schedule_once dapat mengoptimalkan kinerja aplikasi
 # karena tidak perlu menunggu for loop dieksekusi
+# konsepnya seperti async dan await
 
 from kivy.uix.screenmanager import Screen
 from kivy.uix.button import Button
@@ -132,9 +133,12 @@ class Manager(Screen):
         # bind tombol yang ada di first_screen karena berbeda parent class dengan manager
         screen1.ids.get_started_btn.bind(on_release = self.showLoginForm)
         screen1.ids.line_sparator_login_form.bind(on_release = self.removeLoginForm)
-        
+
+        # sidebar config
+        self._sidebar_barrier = ScreenBarrier()
+        self._sidebar = Sidebar()
         # bind tombol menu
-        self.ids.manager_menu_btn.bind(on_release = self.showScreen1Sidebar)
+        self.ids.manager_menu_btn.bind(on_release = self.showSidebar)
 
     def secondScreenSetup(self, *args):
         screen2 = self._second_screen
@@ -270,45 +274,44 @@ class Manager(Screen):
 
         screen2.ids.view_all_btn.unbind(on_release = self.showMorePeopleSection)
         screen2.ids.view_all_btn.bind(on_release = self.showLessPeopleSection)
+
+    def showSidebar(self, *args):
+        self.ids.sidebar_place.add_widget(self._sidebar_barrier)
+        self.ids.sidebar_place.add_widget(self._sidebar)
         
-    def showScreen1Sidebar(self, *args):
-        screen1 = self._first_screen
         anim = Animation(
             myX = 0,
-            duration = .2,
+            duration = .3,
             t = 'out_circ'
         )
-        anim.start(self._first_screen.ids.sidebar)
-        
-        barrier = ScreenBarrier()
-        screen1.ids.screen1_sidebar_place.add_widget(barrier)
-        
+        anim.start(self._sidebar)
+
         def callback(*args):
-            self.ids.manager_menu_btn.unbind(on_release = self.showScreen1Sidebar)
-            self.ids.manager_menu_btn.bind(on_release = partial(self.closeScreen1Sidebar, barrier))
-            barrier.bind(on_release = partial(self.closeScreen1Sidebar, barrier))
+            self.ids.manager_menu_btn.unbind(on_release = self.showSidebar)
+            self.ids.manager_menu_btn.bind(on_release = self.closeSidebar)
+            self._sidebar_barrier.bind(on_release = self.closeSidebar)
             printLog('screen1 sidebar', 'Showed')
-        
+
         anim.bind(on_complete = callback)
-        
-    def closeScreen1Sidebar(self, barrier, *args):
-        screen1 = self._first_screen
+
+    def closeSidebar(self, *args):
         anim = Animation(
             myX = -1,
             duration = .1,
             t = 'out_circ'
         )
-        anim.start(self._first_screen.ids.sidebar)
-        
-        screen1.ids.screen1_sidebar_place.remove_widget(barrier)
-        
-        def callback(*args):
-            self.ids.manager_menu_btn.unbind(on_release = self.closeScreen1Sidebar)
-            self.ids.manager_menu_btn.bind(on_release = self.showScreen1Sidebar)
+        anim.start(self._sidebar)
+
+        def callback2(*args):
+            #self.ids.sidebar_place.remove_widget(barrier)
+            self.ids.manager_menu_btn.unbind(on_release = self.closeSidebar)
+            self.ids.manager_menu_btn.bind(on_release = self.showSidebar)
+            self.ids.sidebar_place.remove_widget(self._sidebar)
+            self.ids.sidebar_place.remove_widget(self._sidebar_barrier)
             printLog('screen1 sidebar', 'Closed')
-            
-        anim.bind(on_complete = callback)
-        
+
+        anim.bind(on_complete = callback2)
+
     def loginAuth(self, *args):
         screen1 = self._first_screen
 
@@ -444,6 +447,9 @@ class MyPopup(Button):
     def __init__(self, **kwargs):
         super(MyPopup, self).__init__(**kwargs)
 
+class Sidebar(Button):
+    pass
+    
 ############## CONTENT ##############
 
 class Person():
