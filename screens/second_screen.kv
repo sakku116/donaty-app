@@ -11,10 +11,11 @@
                 pos: self.pos
 
         ScrollView:
+            id: screen2_scrollview
             do_scroll_x: False
             do_scroll_y: True
             #scroll_timeout: 75
-            #effect_cls: 'ScrollEffect'
+            effect_cls: 'DampedScrollEffect'
             
             # ScrollView Container
             BoxLayout: 
@@ -44,11 +45,11 @@
                         creator_pict: ''
                         creator_rule: ''
                         
-                        
                         pos_hint: {'top':1}
                     
-                    # Creators List Section
+                    # profiles List Section
                     BoxLayout: 
+                        id: profile_list_section_container
                         orientation: 'vertical'
                         size_hint: None, None
                         height: self.minimum_height
@@ -98,7 +99,7 @@
                                 pos: self.parent.pos
                                 pos_hint: {'right': 1, 'center_y':.5}
 
-                                #on_release: root.showMorePeople(self)
+                                #on_release: root.scrollToDown()
 
                                 canvas.before:
                                     Color:

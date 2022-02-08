@@ -165,6 +165,9 @@ class Manager(Screen):
 
         self.showLessPeopleSection()
 
+        # bind view all button untuk auto scroll
+        screen2.ids.view_all_btn.bind(on_release = self.scrollToDown)
+
     def updateDonateCard(self, name, role, pict, *args):
         screen2 = self._second_screen
         screen2.ids.donate_card.person_name = name
@@ -212,13 +215,13 @@ class Manager(Screen):
 
         # generate profile card pada profile section
         def generateCard(*args):
-            for i in range(2):
+            for i in range(3):
                 profile_section.add_widget(ProfileCard())
         Clock.schedule_once(generateCard)
 
         # memberikan identitas pada setiap profile card
         def setPersonInfo(*args):
-            people_index = 1
+            people_index = 2
             # karena container children bersifat reversed, maka index juga diambil dari belakang
             for child in profile_section.children:
                 child.person_name = self._people[people_index].name
@@ -233,6 +236,7 @@ class Manager(Screen):
                         child.person_pict
                     )
                 )
+                child.ids.pick_person_btn.bind(on_release = self.scrollToUp)
 
                 people_index -= 1
         Clock.schedule_once(setPersonInfo)
@@ -268,12 +272,32 @@ class Manager(Screen):
                             child.person_pict
                         )
                     )
+                    child.ids.pick_person_btn.bind(on_release = self.scrollToUp)
 
                     people_index -= 1
         Clock.schedule_once(setPersonInfo)
 
         screen2.ids.view_all_btn.unbind(on_release = self.showMorePeopleSection)
         screen2.ids.view_all_btn.bind(on_release = self.showLessPeopleSection)
+        # unbind view all button untuk auto scroll
+        #screen2.ids.view_all_btn.unbind(on_release = self.scrollToDown)
+
+    def scrollToUp(self, *args):
+        '''
+        scroll otomatis ke atas (donate card) saat tombol donate
+        di profile card di tap
+        '''
+
+        screen2 = self._second_screen
+        donate_card_id = screen2.ids.donate_card
+        
+        screen2.ids.screen2_scrollview.scroll_to(donate_card_id)
+
+    def scrollToDown(self, *args):
+        screen2 = self._second_screen
+        bottom_profile_card = screen2.ids.profile_list_section_container
+        
+        screen2.ids.screen2_scrollview.scroll_to(bottom_profile_card)
 
     def showSidebar(self, *args):
         self.ids.sidebar_place.add_widget(self._sidebar_barrier)
@@ -410,8 +434,7 @@ class SecondScreen(Screen):
 ############## UIX ##############
 
 class PaymtdLabel(Label):
-    def __init__(self, **kwargs):
-        super(PaymtdLabel, self).__init__(**kwargs)
+    pass
 
 class GetStartedButton(Button):
     def __init__(self, **kwargs):
@@ -437,18 +460,24 @@ class ScreenBarrier(Button):
     pass
 
 class DonateCard(FloatLayout):
-    def __init__(self, **kwargs):
-        super(DonateCard, self).__init__(**kwargs)
+    pass
 
 class ProfileCard(FloatLayout):
     pass
 
 class MyPopup(Button):
-    def __init__(self, **kwargs):
-        super(MyPopup, self).__init__(**kwargs)
+    pass
 
 class Sidebar(Button):
-    pass
+    def __init__(self, **kwargs):
+        super(Sidebar, self).__init__(**kwargs)
+        self.spawnUnLogedinElement()
+
+    def spawnUnLogedinElement(self, *args): # (for screen 1)
+        pass
+    
+    def spawnLogedinElement(self, *args): # (for screen 2)
+        pass
     
 ############## CONTENT ##############
 
