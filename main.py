@@ -1,6 +1,5 @@
 '''
 C:/py_venv/kivy_venv/scripts/activate
-test git dari pc lain 2
 '''
 
 '''
