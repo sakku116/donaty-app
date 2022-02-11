@@ -1,5 +1,5 @@
 
 donaty.code-workspace
-screens/screen1/_pycache_/
-screens/screen2/_pycache_/
-uix/_pycache_/
+screens/screen1/__pycache__/
+screens/screen2/__pycache__/
+uix/__pycache__/
