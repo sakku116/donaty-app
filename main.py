@@ -32,6 +32,7 @@ from kivy.uix.floatlayout import FloatLayout
 
 from datetime import datetime
 from random import randint, sample
+import time
 from functools import partial
 # partial memungkinkan untuk memberi parameter saat bind function
 
@@ -276,7 +277,18 @@ class Manager(Screen):
             t = 'out_circ'
         ).start(popup)
 
+        # declare task
+        task = Clock.schedule_once(partial(
+            self.removePopup, 
+            barrier,
+            popup), 4)
+
+        # func untuk membatalkan task saat diremove manual oleh user
+        def cancelTask(*args):
+            task.cancel()
+
         # bind barrier ke removePopup
+        barrier.bind(on_release = cancelTask)
         barrier.bind(on_release =
             partial(
                 self.removePopup,
