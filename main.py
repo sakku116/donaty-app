@@ -8,7 +8,6 @@ from kivy import Config
 Config.set('graphics', 'multisamples', '0')
 from kivy import require
 require('2.0.0')
-test git with terminal
 '''
 
 from kivy.properties import NumericProperty
