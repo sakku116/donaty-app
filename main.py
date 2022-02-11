@@ -45,12 +45,12 @@ class Manager(Screen):
         super(Manager, self).__init__(**kwargs)
 
         # define first screen class
-        self._first_screen = FirstScreen()
-        self.ids.first_screen_place.add_widget(self._first_screen)
+        self._screen1 = FirstScreen()
+        self.ids.first_screen_place.add_widget(self._screen1)
         self.firstScreenSetup()
 
         # define second screen class
-        self._second_screen = SecondScreen()
+        self._screen2 = SecondScreen()
 
         # declare people
         self._people = [
@@ -66,6 +66,198 @@ class Manager(Screen):
         ]
         self._selected_person = ''
 
+    def goToFirstScreen(self, *args):
+        pass
+
+    def goToSecondScreen(self, *args):
+        # spawn second_screen
+        screen2_place = self.ids.second_screen_place
+        screen2_place.add_widget(self._screen2)
+        self.secondScreenSetup()
+
+        printLog('log','second_screen created in screen2_place')
+
+        # remove first_screen
+        screen1_place = self.ids.first_screen_place
+        screen1_place.remove_widget(self._screen1)
+
+        printLog('log','first screen removed from screen1_place')
+
+    def firstScreenSetup(self, *args):
+        # bind tombol yang ada di first_screen karena berbeda parent class dengan manager
+        self._screen1.ids.get_started_btn.bind(on_release = self.showLoginForm)
+        self._screen1.ids.line_sparator_login_form.bind(on_release = self.removeLoginForm)
+
+        # sidebar config
+        self._sidebar_barrier = ScreenBarrier()
+        self._sidebar = Sidebar()
+        # bind tombol menu
+        self.ids.manager_menu_btn.bind(on_release = self.showSidebar)
+
+    def secondScreenSetup(self, *args):
+        # bind send_button
+        self._screen2.ids.donate_card.ids.send_button.bind(on_release = self.sendDonate)
+
+        # setting tanggal
+        date = str(datetime.now().strftime('%d/%m/%Y'))
+        self._screen2.ids.donate_card.datetime = date
+
+        # mengacak _people
+        self._people = sample(self._people, k=len(self._people))
+
+        # memilih person untuk ditampilkan di donate card
+        random_integer = randint(0, len(self._people)-1)
+        random_choosen_person = self._people[random_integer]
+
+        self.updateDonateCard(
+            random_choosen_person.name,
+            random_choosen_person.role,
+            random_choosen_person.photo_path
+        )
+
+        self.showLessPeopleSection()
+
+        # bind view all button untuk auto scroll
+        self._screen2.ids.view_all_btn.bind(on_release = self._screen2.scrollToDown)
+
+    def updateDonateCard(self, name, role, pict, *args):
+        self._screen2.ids.donate_card.person_name = name
+        self._screen2.ids.donate_card.person_role = role
+        self._screen2.ids.donate_card.person_pict = pict
+
+        self._selected_person = name
+
+        # mereset form selected_person diperbarui
+        self._screen2.ids.donate_card.ids.money_total.text = '0'
+        self._screen2.ids.donate_card.ids.message_form.text = ''
+
+    def sendDonate(self, *args):
+        person = self._screen2.ids.donate_card.person_name
+        money = self._screen2.ids.donate_card.ids.money_total.text
+        message = self._screen2.ids.donate_card.ids.message_form.text
+
+        if money == '0':
+            self.spawnPopup(
+                'Donasi Gagal!!!',
+                f'Setidaknya butuh $1 untuk berdonasi'
+            )
+        else:
+            self.spawnPopup(
+                'Donasi Berhasil!!!',
+                f'Terimakasih, Kamu telah mengirimkan donasi kepada {person} sebesar ${money}'
+            )
+
+        printLog('donate card info', person)
+        printLog('donate card info', money)
+        printLog('donate card info', message)
+
+    def showSidebar(self, *args):
+        self.ids.sidebar_place.add_widget(self._sidebar_barrier)
+        self.ids.sidebar_place.add_widget(self._sidebar)
+        
+        anim = Animation(
+            myX = 0,
+            duration = .3,
+            t = 'out_circ'
+        )
+        anim.start(self._sidebar)
+
+        def callback(*args):
+            self.ids.manager_menu_btn.unbind(on_release = self.showSidebar)
+            self.ids.manager_menu_btn.bind(on_release = self.closeSidebar)
+            self._sidebar_barrier.bind(on_release = self.closeSidebar)
+            printLog('screen1 sidebar', 'Showed')
+
+        anim.bind(on_complete = callback)
+
+    def closeSidebar(self, *args):
+        anim = Animation(
+            myX = -1,
+            duration = .1,
+            t = 'out_circ'
+        )
+        anim.start(self._sidebar)
+
+        def callback2(*args):
+            #self.ids.sidebar_place.remove_widget(barrier)
+            self.ids.manager_menu_btn.unbind(on_release = self.closeSidebar)
+            self.ids.manager_menu_btn.bind(on_release = self.showSidebar)
+            self.ids.sidebar_place.remove_widget(self._sidebar)
+            self.ids.sidebar_place.remove_widget(self._sidebar_barrier)
+            printLog('screen1 sidebar', 'Closed')
+
+        anim.bind(on_complete = callback2)
+
+    def loginAuth(self, *args):
+        email = self._screen1.ids.email_login_field.text
+        password = self._screen1.ids.password_login_field.text
+
+        if email == 'admin' and password == 'admin':
+            self.goToSecondScreen()
+            printLog('log', 'berhasil login')
+        else:
+            pass
+
+    def showLoginForm(self, *args):
+        anim = Animation(
+            my = 0,
+            duration = .3,
+            t = 'out_circ'
+        ).start(self._screen1.ids.login_form)
+
+        self.loginFormState('active')
+
+    def removeLoginForm(self, *args):
+        anim = Animation(
+            my = -.5,
+            duration = .2,
+            t = 'out_circ'
+        ).start(self._screen1.ids.login_form)
+
+        self.loginFormState('inactive')
+
+    def loginFormState(self, state):
+        printLog('login form sate', state)
+        barrier = ScreenBarrier()
+
+        if state == 'active': # (jika login form telah muncul)
+            # unbind func showLoginForm
+            self._screen1.ids.get_started_btn.unbind(on_release = self.showLoginForm)
+            # bind ke login func
+            self._screen1.ids.get_started_btn.bind(on_release = self.goToSecondScreen)
+
+            # ubah text
+            self._screen1.ids.get_started_btn.text = 'Login'
+
+            # pasang screen barrier
+            self._screen1.ids.barrier_place.add_widget(barrier)
+
+            # bind barrier untuk removeLoginForm
+            barrier.bind(on_release = self.removeLoginForm)
+
+            # bind manager.ids.menu_button + search_button > removeLoginForm
+            self.ids.manager_menu_btn.bind(on_release = self.removeLoginForm)
+            self.ids.manager_search_btn.bind(on_release = self.removeLoginForm)
+
+        else: # (jika login form tidak muncul)
+            # unbind func removeLoginForm
+            self._screen1.ids.get_started_btn.unbind(on_release = self.removeLoginForm)
+
+            # bind kembali func showLoginForm
+            self._screen1.ids.get_started_btn.unbind(on_release = self.goToSecondScreen)
+            self._screen1.ids.get_started_btn.bind(on_release = self.showLoginForm)
+
+            # rubah text button menjadi awalnya
+            self._screen1.ids.get_started_btn.text = 'Get Started'
+
+            # menghapus barrier
+            barrier.unbind(on_release = self.removeLoginForm)
+            self._screen1.ids.barrier_place.clear_widgets()
+
+            # unbind manager.ids.menu_button + search_button > removeLoginForm
+            self.ids.manager_menu_btn.unbind(on_release = self.removeLoginForm)
+            self.ids.manager_search_btn.unbind(on_release = self.removeLoginForm)
+            
     def spawnPopup(self, title, message, *args):
         barrier = ScreenBarrier()
         popup = MyPopup()
@@ -109,103 +301,9 @@ class Manager(Screen):
         )
         anim.start(popup_instance)
         anim.bind(on_complete = remove)
-
-    def goToFirstScreen(self, *args):
-        pass
-
-    def goToSecondScreen(self, *args):
-        # spawn second_screen
-        screen2_place = self.ids.second_screen_place
-        screen2_place.add_widget(self._second_screen)
-        self.secondScreenSetup()
-
-        printLog('log','second_screen created in screen2_place')
-
-        # remove first_screen
-        screen1_place = self.ids.first_screen_place
-        screen1_place.remove_widget(self._first_screen)
-
-        printLog('log','first screen removed from screen1_place')
-
-    def firstScreenSetup(self, *args):
-        screen1 = self._first_screen
-
-        # bind tombol yang ada di first_screen karena berbeda parent class dengan manager
-        screen1.ids.get_started_btn.bind(on_release = self.showLoginForm)
-        screen1.ids.line_sparator_login_form.bind(on_release = self.removeLoginForm)
-
-        # sidebar config
-        self._sidebar_barrier = ScreenBarrier()
-        self._sidebar = Sidebar()
-        # bind tombol menu
-        self.ids.manager_menu_btn.bind(on_release = self.showSidebar)
-
-    def secondScreenSetup(self, *args):
-        screen2 = self._second_screen
-
-        # bind send_button
-        screen2.ids.donate_card.ids.send_button.bind(on_release = self.sendDonate)
-
-        # setting tanggal
-        date = str(datetime.now().strftime('%d/%m/%Y'))
-        screen2.ids.donate_card.datetime = date
-
-        # mengacak _people
-        self._people = sample(self._people, k=len(self._people))
-
-        # memilih person untuk ditampilkan di donate card
-        random_integer = randint(0, len(self._people)-1)
-        random_choosen_person = self._people[random_integer]
-
-        self.updateDonateCard(
-            random_choosen_person.name,
-            random_choosen_person.role,
-            random_choosen_person.photo_path
-        )
-
-        self.showLessPeopleSection()
-
-        # bind view all button untuk auto scroll
-        screen2.ids.view_all_btn.bind(on_release = self.scrollToDown)
-
-    def updateDonateCard(self, name, role, pict, *args):
-        screen2 = self._second_screen
-        screen2.ids.donate_card.person_name = name
-        screen2.ids.donate_card.person_role = role
-        screen2.ids.donate_card.person_pict = pict
-
-        self._selected_person = name
-
-        # mereset form selected_person diperbarui
-        screen2.ids.donate_card.ids.money_total.text = '0'
-        screen2.ids.donate_card.ids.message_form.text = ''
-
-    def sendDonate(self, *args):
-        screen2 = self._second_screen
-
-        person = screen2.ids.donate_card.person_name
-        money = screen2.ids.donate_card.ids.money_total.text
-        message = screen2.ids.donate_card.ids.message_form.text
-
-        if money == '0':
-            self.spawnPopup(
-                'Donasi Gagal!!!',
-                f'Setidaknya butuh $1 untuk berdonasi'
-            )
-        else:
-            self.spawnPopup(
-                'Donasi Berhasil!!!',
-                f'Terimakasih, Kamu telah mengirimkan donasi kepada {person} sebesar ${money}'
-            )
-
-        printLog('donate card info', person)
-        printLog('donate card info', money)
-        printLog('donate card info', message)
-
+        
     def showLessPeopleSection(self, *args):
-        screen2 = self._second_screen
-
-        profile_section = screen2.ids.profile_card_container
+        profile_section = self._screen2.ids.profile_card_container
 
         if len(profile_section.children) == len(self._people):
             profile_section.clear_widgets()
@@ -236,17 +334,16 @@ class Manager(Screen):
                         child.person_pict
                     )
                 )
-                child.ids.pick_person_btn.bind(on_release = self.scrollToUp)
+                child.ids.pick_person_btn.bind(on_release = self._screen2.scrollToUp)
 
                 people_index -= 1
         Clock.schedule_once(setPersonInfo)
 
-        screen2.ids.view_all_btn.unbind(on_release = self.showLessPeopleSection)
-        screen2.ids.view_all_btn.bind(on_release = self.showMorePeopleSection)
+        self._screen2.ids.view_all_btn.unbind(on_release = self.showLessPeopleSection)
+        self._screen2.ids.view_all_btn.bind(on_release = self.showMorePeopleSection)
 
     def showMorePeopleSection(self, instance):
-        screen2 = self._second_screen
-        profile_section = screen2.ids.profile_card_container
+        profile_section = self._screen2.ids.profile_card_container
 
         # menambah profile card
         profile_card_showed_total = len(profile_section.children)
@@ -272,142 +369,15 @@ class Manager(Screen):
                             child.person_pict
                         )
                     )
-                    child.ids.pick_person_btn.bind(on_release = self.scrollToUp)
+                    child.ids.pick_person_btn.bind(on_release = self._screen2.scrollToUp)
 
                     people_index -= 1
         Clock.schedule_once(setPersonInfo)
 
-        screen2.ids.view_all_btn.unbind(on_release = self.showMorePeopleSection)
-        screen2.ids.view_all_btn.bind(on_release = self.showLessPeopleSection)
+        self._screen2.ids.view_all_btn.unbind(on_release = self.showMorePeopleSection)
+        self._screen2.ids.view_all_btn.bind(on_release = self.showLessPeopleSection)
         # unbind view all button untuk auto scroll
-        #screen2.ids.view_all_btn.unbind(on_release = self.scrollToDown)
-
-    def scrollToUp(self, *args):
-        '''
-        scroll otomatis ke atas (donate card) saat tombol donate
-        di profile card di tap
-        '''
-
-        screen2 = self._second_screen
-        donate_card_id = screen2.ids.donate_card
-        
-        screen2.ids.screen2_scrollview.scroll_to(donate_card_id)
-
-    def scrollToDown(self, *args):
-        screen2 = self._second_screen
-        bottom_profile_card = screen2.ids.profile_list_section_container
-        
-        screen2.ids.screen2_scrollview.scroll_to(bottom_profile_card)
-
-    def showSidebar(self, *args):
-        self.ids.sidebar_place.add_widget(self._sidebar_barrier)
-        self.ids.sidebar_place.add_widget(self._sidebar)
-        
-        anim = Animation(
-            myX = 0,
-            duration = .3,
-            t = 'out_circ'
-        )
-        anim.start(self._sidebar)
-
-        def callback(*args):
-            self.ids.manager_menu_btn.unbind(on_release = self.showSidebar)
-            self.ids.manager_menu_btn.bind(on_release = self.closeSidebar)
-            self._sidebar_barrier.bind(on_release = self.closeSidebar)
-            printLog('screen1 sidebar', 'Showed')
-
-        anim.bind(on_complete = callback)
-
-    def closeSidebar(self, *args):
-        anim = Animation(
-            myX = -1,
-            duration = .1,
-            t = 'out_circ'
-        )
-        anim.start(self._sidebar)
-
-        def callback2(*args):
-            #self.ids.sidebar_place.remove_widget(barrier)
-            self.ids.manager_menu_btn.unbind(on_release = self.closeSidebar)
-            self.ids.manager_menu_btn.bind(on_release = self.showSidebar)
-            self.ids.sidebar_place.remove_widget(self._sidebar)
-            self.ids.sidebar_place.remove_widget(self._sidebar_barrier)
-            printLog('screen1 sidebar', 'Closed')
-
-        anim.bind(on_complete = callback2)
-
-    def loginAuth(self, *args):
-        screen1 = self._first_screen
-
-        email = screen1.ids.email_login_field.text
-        password = screen1.ids.password_login_field.text
-
-        if email == 'admin' and password == 'admin':
-            self.goToSecondScreen()
-            printLog('log', 'berhasil login')
-        else:
-            pass
-
-    def showLoginForm(self, *args):
-        anim = Animation(
-            my = 0,
-            duration = .3,
-            t = 'out_circ'
-        ).start(self._first_screen.ids.login_form)
-
-        self.loginFormState('active')
-
-    def removeLoginForm(self, *args):
-        anim = Animation(
-            my = -.5,
-            duration = .2,
-            t = 'out_circ'
-        ).start(self._first_screen.ids.login_form)
-
-        self.loginFormState('inactive')
-
-    def loginFormState(self, state):
-        printLog('login form sate', state)
-        screen1 = self._first_screen
-        barrier = ScreenBarrier()
-
-        if state == 'active': # (jika login form telah muncul)
-            # unbind func showLoginForm
-            screen1.ids.get_started_btn.unbind(on_release = self.showLoginForm)
-            # bind ke login func
-            screen1.ids.get_started_btn.bind(on_release = self.goToSecondScreen)
-
-            # ubah text
-            screen1.ids.get_started_btn.text = 'Login'
-
-            # pasang screen barrier
-            screen1.ids.barrier_place.add_widget(barrier)
-
-            # bind barrier untuk removeLoginForm
-            barrier.bind(on_release = self.removeLoginForm)
-
-            # bind manager.ids.menu_button + search_button > removeLoginForm
-            self.ids.manager_menu_btn.bind(on_release = self.removeLoginForm)
-            self.ids.manager_search_btn.bind(on_release = self.removeLoginForm)
-
-        else: # (jika login form tidak muncul)
-            # unbind func removeLoginForm
-            screen1.ids.get_started_btn.unbind(on_release = self.removeLoginForm)
-
-            # bind kembali func showLoginForm
-            screen1.ids.get_started_btn.unbind(on_release = self.goToSecondScreen)
-            screen1.ids.get_started_btn.bind(on_release = self.showLoginForm)
-
-            # rubah text button menjadi awalnya
-            screen1.ids.get_started_btn.text = 'Get Started'
-
-            # menghapus barrier
-            barrier.unbind(on_release = self.removeLoginForm)
-            screen1.ids.barrier_place.clear_widgets()
-
-            # unbind manager.ids.menu_button + search_button > removeLoginForm
-            self.ids.manager_menu_btn.unbind(on_release = self.removeLoginForm)
-            self.ids.manager_search_btn.unbind(on_release = self.removeLoginForm)
+        #self._screen2.ids.view_all_btn.unbind(on_release = self.scrollToDown)
 
 class FirstScreen(Screen):
     pass
@@ -430,6 +400,22 @@ class SecondScreen(Screen):
         maka dari itu menggunakan boxlayout dan membuatnya
         responsive dengan cara manual
         '''
+        
+    def scrollToUp(self, *args):
+        '''
+        scroll otomatis ke atas (donate card) saat tombol donate
+        di profile card di tap
+        '''
+        donate_card_id = self.ids.donate_card
+        self.ids.screen2_scrollview.scroll_to(donate_card_id)
+
+    def scrollToDown(self, *args):
+        '''
+        scroll otomatis ke bawah (person section) saat tombol
+        view all di tap
+        '''
+        bottom_profile_card = self.ids.profile_list_section_container
+        self.ids.screen2_scrollview.scroll_to(bottom_profile_card)
 
 ############## UIX ##############
 
@@ -497,7 +483,20 @@ class MyApp(App):
         kv = Builder.load_file('./screens/manager.kv')
         Window.size = (384, 680)
         Window.minimum_width, Window.minimum_height = Window.size
+        #changeStatusBarColor()
         return Manager()
+        
+    def changeStatusBarColor(self):
+        from jnius import autoclass
+        
+        WindowManager = autoclass('android.view.WindowManager')
+        R = autoclass('android.R')
+        activity = autoclass('My.PythonActivity').mActivity
+        
+        window = activity.getWindow();
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        window.setStatusBarColor(activity.getResources().getColor(R.color.my_statusbar_color));
 
 if __name__ == '__main__':
     MyApp().run()
