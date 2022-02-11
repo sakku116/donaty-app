@@ -10,31 +10,28 @@ from kivy import require
 require('2.0.0')
 '''
 
-from kivy.properties import NumericProperty
+#from kivy.properties import NumericProperty
 from kivy.app import App
 from kivy.core.window import Window
 from kivy.lang import Builder
 from kivy.animation import Animation
+from kivy.uix.screenmanager import Screen
 from kivy.clock import Clock
+'''
 # penggunaan Clock.schedule_once dapat mengoptimalkan kinerja aplikasi
 # karena tidak perlu menunggu for loop dieksekusi
 # konsepnya seperti async dan await
+'''
 
-from kivy.uix.screenmanager import Screen
-from kivy.uix.button import Button
-from kivy.uix.label import Label
-from kivy.uix.floatlayout import FloatLayout
-#from kivy.uix.boxlayout import BoxLayout
-#from kivy.uix.textinput import TextInput
-#from kivy.uix.widget import Widget
-#from kivy.core.text import Text
-#from kivy.clock import mainthread
-
+# IMPORT UTILITIES
 from datetime import datetime
 from random import randint, sample
-import time
 from functools import partial
-# partial memungkinkan untuk memberi parameter saat bind function
+
+# IMPORT FILES
+from screens.screen1.first_screen import FirstScreen
+from screens.screen2.second_screen import SecondScreen
+from uix.uix_classes import *
 
 def printLog(event, text):
     print(f'({event}) = {text}')
@@ -391,91 +388,9 @@ class Manager(Screen):
         # unbind view all button untuk auto scroll
         #self._screen2.ids.view_all_btn.unbind(on_release = self.scrollToDown)
 
-class FirstScreen(Screen):
-    pass
-
-class SecondScreen(Screen):
-    def __init__(self, **kwargs):
-        super(SecondScreen, self).__init__(**kwargs)
-        Window.bind(size=self.updateLayoutOrientation)
-
-    def updateLayoutOrientation(self, win, size):
-        width, height = size
-
-        self.ids.home_container.orientation = (
-            'vertical' if width <= 725 else 'horizontal'
-        )
-        '''
-        membuat boxlayout container ke tengah serta
-        children menjadi responsive, karena stacklayout hanya bisa
-        membuat responsive, tetapi tidak bisa dibuat ke tengah,
-        maka dari itu menggunakan boxlayout dan membuatnya
-        responsive dengan cara manual
-        '''
-        
-    def scrollToUp(self, *args):
-        '''
-        scroll otomatis ke atas (donate card) saat tombol donate
-        di profile card di tap
-        '''
-        donate_card_id = self.ids.donate_card
-        self.ids.screen2_scrollview.scroll_to(donate_card_id)
-
-    def scrollToDown(self, *args):
-        '''
-        scroll otomatis ke bawah (person section) saat tombol
-        view all di tap
-        '''
-        bottom_profile_card = self.ids.profile_list_section_container
-        self.ids.screen2_scrollview.scroll_to(bottom_profile_card)
-
 ############## UIX ##############
 
-class PaymtdLabel(Label):
-    pass
 
-class GetStartedButton(Button):
-    def __init__(self, **kwargs):
-        super(GetStartedButton, self).__init__(**kwargs)
-
-    def pressed(self):
-        anim = Animation(
-            mx = 0.01,
-            my = .96,
-            duration = .03,
-        ).start(self.ids.fg_button)
-
-    def released(self):
-        # kembali ke posisi awal
-        anim = Animation(
-            mx = 0,
-            my = 1,
-            duration = .2,
-            t = 'out_circ'
-        ).start(self.ids.fg_button)
-
-class ScreenBarrier(Button):
-    pass
-
-class DonateCard(FloatLayout):
-    pass
-
-class ProfileCard(FloatLayout):
-    pass
-
-class MyPopup(Button):
-    pass
-
-class Sidebar(Button):
-    def __init__(self, **kwargs):
-        super(Sidebar, self).__init__(**kwargs)
-        self.spawnUnLogedinElement()
-
-    def spawnUnLogedinElement(self, *args): # (for screen 1)
-        pass
-    
-    def spawnLogedinElement(self, *args): # (for screen 2)
-        pass
     
 ############## CONTENT ##############
 
@@ -492,10 +407,21 @@ class Person():
 
 class MyApp(App):
     def build(self):
-        kv = Builder.load_file('./screens/manager.kv')
+
+        '''
+        [STRUCTURE]
+        <Manager>:
+            # import all of kv file and it used by the children
+            # without importing the file again inside of children class
+            <FirstScreen>:
+            <SecondScreen>:
+        '''
+
+        kv = Builder.load_file('manager.kv')
         Window.size = (384, 680)
         Window.minimum_width, Window.minimum_height = Window.size
         #changeStatusBarColor()
+
         return Manager()
         
     def changeStatusBarColor(self):
