@@ -2,87 +2,132 @@
     #@Button
     id: popup
 
-    size_hint: 1, None
+    size_hint: .9, None
     #width: 300
-    height: 200
+    height: 170
 
     title: ''
     message: ''
 
-    pos_hint: {'top':self.my_top}
+    pos_hint: {'top':self.my_top, 'center_x':.5}
     my_top: 1.5
 
     background_color: (0,0,0,0)
     background_normal: ''
 
     border_line: 4
-    radius: 25
+    radius: 6
+    elevation: 8
 
-    canvas.before:
-        Color:
-            rgba: (0,0,0,1)
-        RoundedRectangle:
-            size: [self.width, self.height-self.border_line]
-            pos: [self.x, self.y+self.border_line/2]
-            radius: [0,0,self.radius,self.radius]
-
-        Color:
-            rgba: (1,1,1,1)
-        RoundedRectangle:
-            size: [self.width-self.border_line, self.height-self.border_line]
-            pos: [(self.x+self.border_line/2), (self.y+self.border_line)]
-            radius: [0,0,self.radius-2.5,self.radius-2.5]
-
-    BoxLayout:
-        orientation: 'vertical'
-        padding: 20
-
+    FloatLayout:
         pos: self.parent.pos
-        size: self.parent.size
+        pos_hint: {'bottom':.5}
 
-        # Title
-        Label:
-            text: root.title
-            font_name: './assets/fonts/Poppins/Poppins-Medium.ttf'
-            font_size: 17
-            color: (0,0,0,1)
+        size_hint: None, None
+        width: self.parent.width
+        height: self.parent.height - 20
 
-            size_hint_y: None
-            height: 30
+        FloatLayout:
+            pos: self.parent.pos
+            pos_hint: {'bottom':.5}
 
-            text_size: self.size
-            valign: 'top'
-            halign: 'center'
+            size: self.parent.size
 
-        # Line Sparator
-        Widget:
-            size_hint_y: None
-            height: 2
+            elevation: 10
 
-            canvas.before:
-                Color:
-                    rgba: (0,0,0,.4)
-                RoundedRectangle:
-                    size: [self.width, self.height]
-                    pos: self.pos
-                    radius: [self.height/2]
+            # bg canvas
+            Widget:
+                size_hint: None, None
+                width: self.parent.width - root.elevation
+                height: self.parent.height - root.elevation
 
-        # Message of popup
-        Label:
-            markup: True
-            text: root.message
-            color: (0,0,0,1)
-            multiline: True
-            font_name: './assets/fonts/Quicksand/Quicksand-Medium.ttf'
-            font_size: 16
+                pos: self.parent.pos
+                pos_hint: {'bottom':1, 'right':1}
 
-            text_size: self.size
-            valign: 'center'
-            halign: 'center'
+                canvas.before:
+                    Color: 
+                        rgba: (0,0,0,1)
+                    RoundedRectangle:
+                        size: self.size
+                        pos: self.pos
+                        radius: [root.radius]
 
-            canvas.before:
-                Color:
-                    rgba: (0,0,0,0)
-                Rectangle:
-                    size: self.size
-                    pos: self.pos
+            # fg canvas
+            Label:
+                size_hint: None, None
+                width: self.parent.width - root.elevation
+                height: self.parent.height - root.elevation
+
+                pos: self.parent.pos
+                pos_hint: {'top':1}
+
+                canvas.before:
+                    # bg_canvas as outline
+                    Color:
+                        rgba: (0,0,0,1)
+                    RoundedRectangle:
+                        size: self.size
+                        pos: self.pos
+                        radius: [root.radius]
+
+                    # main canvas
+                    Color:
+                        rgba: (239/255, 105/255, 137/255, 1)
+                    RoundedRectangle:
+                        size: [self.width-root.border_line, self.height-root.border_line]
+                        pos: [self.x+root.border_line/2, self.y+root.border_line/2]
+                        radius: [root.radius-2.5]
+
+        BoxLayout:
+            orientation: 'vertical'
+            padding: 20
+
+            pos: self.parent.pos
+            size: self.parent.size
+
+            # Title
+            Label:
+                text: root.title
+                font_name: './assets/fonts/Poppins/Poppins-Medium.ttf'
+                font_size: 17
+                color: (0,0,0,1)
+
+                size_hint_y: None
+                height: 30
+
+                text_size: self.size
+                valign: 'top'
+                halign: 'center'
+
+            # Line Sparator
+            Widget:
+                size_hint_y: None
+                height: 2
+
+                canvas.before:
+                    Color:
+                        rgba: (0,0,0,.4)
+                    RoundedRectangle:
+                        size: [self.width, self.height]
+                        pos: self.pos
+                        radius: [self.height/2]
+
+            # Message of popup
+            Label:
+                markup: True
+                text: root.message
+                color: (0,0,0,1)
+                multiline: True
+                font_name: './assets/fonts/Quicksand/Quicksand-Medium.ttf'
+                font_size: 16
+
+                text_size: self.size
+                valign: 'center'
+                halign: 'center'
+
+                canvas.before:
+                    Color:
+                        rgba: (0,0,0,0)
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
