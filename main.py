@@ -139,13 +139,15 @@ class Manager(Screen):
 
         if money == '0':
             self.spawnPopup(
+                (255/255, 144/255, 144/255, 1),
                 'Donasi Gagal!!!',
-                f'Setidaknya butuh [color=93FF00]$1[/color] untuk berdonasi!!'
+                f'Setidaknya butuh [color=FFFFFF]$1[/color] untuk berdonasi!!'
             )
         else:
             self.spawnPopup(
+                (221/255, 238/255, 170/255, 1),
                 'Donasi Berhasil!!!',
-                f'Terimakasih, Kamu telah mengirimkan donasi kepada [color=0900FF]{person}[/color] sebesar [color=93FF00]${money}[/color]'
+                f'Terimakasih, Kamu telah mengirimkan donasi kepada [color=0800EF]{person}[/color] sebesar [color=EC0101]${money}[/color]'
             )
             self.resetDonateCardForm()
 
@@ -260,10 +262,11 @@ class Manager(Screen):
             self.ids.manager_menu_btn.unbind(on_release = self.removeLoginForm)
             self.ids.manager_search_btn.unbind(on_release = self.removeLoginForm)
             
-    def spawnPopup(self, title, message, *args):
+    def spawnPopup(self, color=(239/255, 105/255, 137/255, 1), title='title', message='message', *args):
         # declare popup
         popup = MyPopup()
 
+        popup.canvas_color = color
         popup.title = title
         popup.message = message
 

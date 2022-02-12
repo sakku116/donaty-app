@@ -8,6 +8,7 @@
 
     title: ''
     message: ''
+    canvas_color: (239/255, 105/255, 137/255, 1)
 
     pos_hint: {'top':self.my_top, 'center_x':.5}
     my_top: 1.5
@@ -54,6 +55,7 @@
 
             # fg canvas
             Label:
+                id: fg_canvas
                 size_hint: None, None
                 width: self.parent.width - root.elevation
                 height: self.parent.height - root.elevation
@@ -72,7 +74,7 @@
 
                     # main canvas
                     Color:
-                        rgba: (239/255, 105/255, 137/255, 1)
+                        rgba: root.canvas_color
                     RoundedRectangle:
                         size: [self.width-root.border_line, self.height-root.border_line]
                         pos: [self.x+root.border_line/2, self.y+root.border_line/2]
