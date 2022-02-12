@@ -257,14 +257,12 @@ class Manager(Screen):
             self.ids.manager_search_btn.unbind(on_release = self.removeLoginForm)
             
     def spawnPopup(self, title, message, *args):
-        barrier = ScreenBarrier()
         popup = MyPopup()
 
         popup.title = title
         popup.message = message
 
         # spawn
-        self.ids.popup_place.add_widget(barrier)
         self.ids.popup_place.add_widget(popup)
 
         # animasikan setelah di spawn
@@ -274,33 +272,21 @@ class Manager(Screen):
             t = 'out_circ'
         ).start(popup)
 
-        # declare task
+        # task untuk remove popup
         task = Clock.schedule_once(partial(
             self.removePopup, 
-            barrier,
             popup), 4)
 
-        # func untuk membatalkan task saat diremove manual oleh user
+        # func untuk membatalkan task
         def cancelTask(*args):
             task.cancel()
 
-        # bind barrier ke removePopup
-        barrier.bind(on_release = cancelTask)
-        barrier.bind(on_release =
-            partial(
-                self.removePopup,
-                barrier,
-                popup
-            )
-        )
+        printLog('popup log', 'popup placed')
 
-        printLog('popup log', 'barrier & popup placed')
-
-    def removePopup(self, barrier_instance, popup_instance, *args):
+    def removePopup(self, popup_instance, *args):
         def remove(*args):
-            self.ids.popup_place.remove_widget(barrier_instance)
             self.ids.popup_place.remove_widget(popup_instance)
-            printLog('popup log', 'barrier & popup removed')
+            printLog('popup log', 'popup removed')
 
         # animasikan sebelum dihapus
         anim = Animation(
