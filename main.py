@@ -125,6 +125,9 @@ class Manager(Screen):
 
         self._selected_person = name
 
+        self.resetDonateCardForm()
+
+    def resetDonateCardForm(self, *args):
         # mereset form selected_person diperbarui
         self._screen2.ids.donate_card.ids.money_total.text = '0'
         self._screen2.ids.donate_card.ids.message_form.text = ''
@@ -144,6 +147,7 @@ class Manager(Screen):
                 'Donasi Berhasil!!!',
                 f'Terimakasih, Kamu telah mengirimkan donasi kepada {person} sebesar ${money}'
             )
+            self.resetDonateCardForm()
 
         printLog('donate card info', person)
         printLog('donate card info', money)
@@ -257,6 +261,7 @@ class Manager(Screen):
             self.ids.manager_search_btn.unbind(on_release = self.removeLoginForm)
             
     def spawnPopup(self, title, message, *args):
+        # declare popup
         popup = MyPopup()
 
         popup.title = title
@@ -374,10 +379,6 @@ class Manager(Screen):
         # unbind view all button untuk auto scroll
         #self._screen2.ids.view_all_btn.unbind(on_release = self.scrollToDown)
 
-############## UIX ##############
-
-
-    
 ############## CONTENT ##############
 
 class Person():
