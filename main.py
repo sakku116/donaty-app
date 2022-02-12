@@ -140,12 +140,12 @@ class Manager(Screen):
         if money == '0':
             self.spawnPopup(
                 'Donasi Gagal!!!',
-                f'Setidaknya butuh $1 untuk berdonasi'
+                f'Setidaknya butuh [color=93FF00]$1[/color] untuk berdonasi!!'
             )
         else:
             self.spawnPopup(
                 'Donasi Berhasil!!!',
-                f'Terimakasih, Kamu telah mengirimkan donasi kepada {person} sebesar ${money}'
+                f'Terimakasih, Kamu telah mengirimkan donasi kepada [color=0900FF]{person}[/color] sebesar [color=93FF00]${money}[/color]'
             )
             self.resetDonateCardForm()
 
