@@ -63,6 +63,14 @@ class Manager(Screen):
             Person('Windo Anggara', 'Content Creator', './assets/creators/windo_anggara.jpg')
         ]
         self._selected_person = ''
+        
+        # sidebar config
+        self._sidebar_barrier = ScreenBarrier()
+        self._sidebar = Sidebar()
+        # bind tombol menu
+        self.ids.manager_menu_btn.bind(on_release = 
+            self.showSidebar
+        )
 
     def goToFirstScreen(self, *args):
         pass
@@ -85,12 +93,6 @@ class Manager(Screen):
         # bind tombol yang ada di first_screen karena berbeda parent class dengan manager
         self._screen1.ids.get_started_btn.bind(on_release = self.showLoginForm)
         self._screen1.ids.line_sparator_login_form.bind(on_release = self.removeLoginForm)
-
-        # sidebar config
-        self._sidebar_barrier = ScreenBarrier()
-        self._sidebar = Sidebar()
-        # bind tombol menu
-        self.ids.manager_menu_btn.bind(on_release = self.showSidebar)
 
     def secondScreenSetup(self, *args):
         # bind send_button
@@ -159,6 +161,7 @@ class Manager(Screen):
         self.ids.sidebar_place.add_widget(self._sidebar_barrier)
         self.ids.sidebar_place.add_widget(self._sidebar)
         
+        # animate
         anim = Animation(
             myX = 0,
             duration = .3,
@@ -170,10 +173,10 @@ class Manager(Screen):
             self.ids.manager_menu_btn.unbind(on_release = self.showSidebar)
             self.ids.manager_menu_btn.bind(on_release = self.closeSidebar)
             self._sidebar_barrier.bind(on_release = self.closeSidebar)
-            printLog('screen1 sidebar', 'Showed')
+            printLog('sidebar', 'Showed')
 
         anim.bind(on_complete = callback)
-
+        
     def closeSidebar(self, *args):
         anim = Animation(
             myX = -1,
@@ -188,7 +191,7 @@ class Manager(Screen):
             self.ids.manager_menu_btn.bind(on_release = self.showSidebar)
             self.ids.sidebar_place.remove_widget(self._sidebar)
             self.ids.sidebar_place.remove_widget(self._sidebar_barrier)
-            printLog('screen1 sidebar', 'Closed')
+            printLog('sidebar', 'Closed')
 
         anim.bind(on_complete = callback2)
 
