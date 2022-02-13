@@ -18,9 +18,9 @@ from kivy.animation import Animation
 from kivy.uix.screenmanager import Screen
 from kivy.clock import Clock
 '''
-# penggunaan Clock.schedule_once dapat mengoptimalkan kinerja aplikasi
-# karena tidak perlu menunggu for loop dieksekusi
-# konsepnya seperti async dan await
+penggunaan Clock.schedule_once dapat mengoptimalkan kinerja aplikasi
+karena tidak perlu menunggu for loop dieksekusi.
+konsepnya seperti async dan await
 '''
 
 # IMPORT UTILITIES
