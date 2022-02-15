@@ -3,6 +3,7 @@ C:/py_venv/kivy_venv/scripts/activate
 '''
 
 '''
+s
 # konfigurasi untuk openGl dibawah versi 2
 from kivy import Config
 Config.set('graphics', 'multisamples', '0')
