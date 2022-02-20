@@ -50,3 +50,7 @@ class Sidebar(Button):
     
     def spawnLogedinElement(self, *args): # (for screen 2)
         pass
+
+class NavbarItem(Button):
+    def __init__(self, **kwargs):
+        super(NavbarItem, self).__init__(*kwargs)

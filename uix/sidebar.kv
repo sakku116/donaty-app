@@ -1,0 +1,55 @@
+<Sidebar>
+    # @Button
+    id: sidebar
+    size_hint: None, 1
+    width: 300
+
+    background_color: (0,0,0,0)
+    background_normal: ''
+
+    pos_hint: {'x':self.myX}
+    # 0 for spawned
+    # -1 for unspawned
+    myX: -1
+
+    canvas.before:
+        Color:
+            rgba: (0,0,0,1)
+        Rectangle:
+            size: self.size
+            pos: [self.x+2, self.y]
+            
+        Color:
+            rgba: (1,1,1,1)
+        Rectangle:
+            size: self.size
+            pos: self.pos
+
+    FloatLayout:
+        size: self.parent.size
+        pos: self.parent.pos
+
+        canvas.before:
+            Color:
+                rgba: (0,0,1,1)
+            Rectangle:
+                size: self.size
+                pos: self.pos
+
+        BoxLayout:
+            orientation: 'vertical'
+            id: sidebar_container
+            pos: self.parent.pos
+            size_hint: None, None
+            width: self.parent.width
+            height: self.minimum_height
+            pos_hint: {'top':1}
+
+            canvas.before:
+                Color:
+                    rgba: (1,0,0,1)
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+
+            

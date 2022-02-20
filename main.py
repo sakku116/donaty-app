@@ -67,10 +67,8 @@ class Manager(Screen):
         # sidebar config
         self._sidebar_barrier = ScreenBarrier()
         self._sidebar = Sidebar()
-        # bind tombol menu
-        self.ids.manager_menu_btn.bind(on_release = 
-            self.showSidebar
-        )
+        # bind tombol menu ke sidebar
+        self.ids.manager_menu_btn.bind(on_release = self.showSidebar)
 
     def goToFirstScreen(self, *args):
         pass
@@ -93,8 +91,14 @@ class Manager(Screen):
         # bind tombol yang ada di first_screen karena berbeda parent class dengan manager
         self._screen1.ids.get_started_btn.bind(on_release = self.showLoginForm)
         self._screen1.ids.line_sparator_login_form.bind(on_release = self.removeLoginForm)
+        
+        # set sidebar state
+        self._for_screen_sidebar = 'for_screen1'
 
     def secondScreenSetup(self, *args):
+        # set sidebar state
+        self._for_screen_sidebar = 'for_screen2'
+
         # bind send_button
         self._screen2.ids.donate_card.ids.send_button.bind(on_release = self.sendDonate)
 
@@ -160,6 +164,17 @@ class Manager(Screen):
     def showSidebar(self, *args):
         self.ids.sidebar_place.add_widget(self._sidebar_barrier)
         self.ids.sidebar_place.add_widget(self._sidebar)
+
+        # sidebar config
+        if self._for_screen_sidebar == 'for_screen1':
+            # tambahkan tombol tombol untuk sidebar screen1
+            printLog('sidebar', 'for screen1')
+            item1 = NavbarItem()
+            #self._sidebar.ids.sidebar_container.add_widget(item1)
+
+        elif self._for_screen_sidebar == 'for_screen2':
+            # tambahkan tombol tombol untuk sediebar screen2
+            printLog('sidebar', 'for screen2')
         
         # animate
         anim = Animation(
