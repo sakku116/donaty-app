@@ -52,5 +52,6 @@ class Sidebar(Button):
         pass
 
 class NavbarItem(Button):
-    def __init__(self, **kwargs):
-        super(NavbarItem, self).__init__(*kwargs)
+    def __init__(self, name='item'):
+        super(NavbarItem, self).__init__()
+        self.text = name

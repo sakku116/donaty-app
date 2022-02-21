@@ -88,16 +88,16 @@ class Manager(Screen):
         printLog('log','first screen removed from screen1_place')
 
     def firstScreenSetup(self, *args):
+        # set sidebar state screen for
+        self.sidebarConfig('for_screen1')
+
         # bind tombol yang ada di first_screen karena berbeda parent class dengan manager
         self._screen1.ids.get_started_btn.bind(on_release = self.showLoginForm)
         self._screen1.ids.line_sparator_login_form.bind(on_release = self.removeLoginForm)
-        
-        # set sidebar state
-        self._for_screen_sidebar = 'for_screen1'
 
     def secondScreenSetup(self, *args):
-        # set sidebar state
-        self._for_screen_sidebar = 'for_screen2'
+        # set sidebar state screen for
+        self.sidebarConfig('for_screen2')
 
         # bind send_button
         self._screen2.ids.donate_card.ids.send_button.bind(on_release = self.sendDonate)
@@ -161,20 +161,43 @@ class Manager(Screen):
         printLog('donate card info', money)
         printLog('donate card info', message)
 
+    def sidebarConfig(self, screen):
+        def spawnItems(menu_items):
+            def addItems(*args):
+                for i in menu_items:
+                    self._sidebar.ids.container.add_widget(i)
+            task = Clock.schedule_once(addItems)
+
+        if screen == 'for_screen1':
+            printLog('sidebar', 'for screen1')
+            # bersihkan menu dari for_screen1
+            # menghindari error ketika sidebar_place belum ditempati
+            if len(self.ids.sidebar_place.children) == 0:
+                pass
+            else:
+                if len(self._sidebar.ids.container.children) == 0:
+                    self._sidebar.ids.container.clear_widgets()
+            spawnItems([
+                NavbarItem('s1_m1'),
+                NavbarItem('s1_m2'),
+                NavbarItem('s1_m3'),
+            ])
+
+        elif screen == 'for_screen2':
+            printLog('sidebar', 'for screen2')
+            # bersihkan menu dari for_screen1
+            self._sidebar.ids.container.clear_widgets()
+
+            spawnItems([
+                NavbarItem('s2_m1'),
+                NavbarItem('s2_m2'),
+                NavbarItem('s2_m3'),
+            ])
+
     def showSidebar(self, *args):
+        # spawn
         self.ids.sidebar_place.add_widget(self._sidebar_barrier)
         self.ids.sidebar_place.add_widget(self._sidebar)
-
-        # sidebar config
-        if self._for_screen_sidebar == 'for_screen1':
-            # tambahkan tombol tombol untuk sidebar screen1
-            printLog('sidebar', 'for screen1')
-            item1 = NavbarItem()
-            #self._sidebar.ids.sidebar_container.add_widget(item1)
-
-        elif self._for_screen_sidebar == 'for_screen2':
-            # tambahkan tombol tombol untuk sediebar screen2
-            printLog('sidebar', 'for screen2')
         
         # animate
         anim = Animation(
