@@ -448,7 +448,7 @@ class MyApp(App):
             <SecondScreen>:
         '''
 
-        kv = Builder.load_file('manager.kv')
+        kv = Builder.load_file('main.kv')
         Window.size = (384, 680)
         Window.minimum_width, Window.minimum_height = Window.size
         #changeStatusBarColor()
