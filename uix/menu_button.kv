@@ -8,14 +8,14 @@
     background_color: (0,0,0,0)
 
     feedback_size: 26
-    
+
     canvas.after:
         #Color:
         #    rgba: (1,0,0,1)
         #Line:
         #    rectangle: self.x, self.y, self.width, self.height
 
-        Color: 
+        Color:
             rgba: (0,0,0,0 if self.state == 'normal' else .05)
         RoundedRectangle:
             size: [self.feedback_size + self.feedback_size/1.2, self.feedback_size + self.feedback_size/1.2]

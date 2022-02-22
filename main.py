@@ -41,6 +41,7 @@ def printLog(event, text):
 class Manager(Screen):
     def __init__(self, **kwargs):
         super(Manager, self).__init__(**kwargs)
+        Window.bind(size=self.updateSidebarLayouting)
 
         # define first screen class
         self._screen1 = FirstScreen()
@@ -63,6 +64,23 @@ class Manager(Screen):
             Person('Windo Anggara', 'Content Creator', './assets/creators/windo_anggara.jpg')
         ]
         self._selected_person = ''
+
+        self._sidebar_shown_state = False
+
+    def updateSidebarLayouting(self, win, size):
+        width, height = size
+
+        sidebar_width = self.ids.sidebar.width
+
+        if width <= 725:
+            pass
+        else:
+            if self._sidebar_shown_state == True:
+                # ubah layout dengan mengurangi width dari screens_place
+                # dan membuatnya stuk ke kanan (bisa dilakukan karena parentnya adalah floatlayout)
+                self.ids.main_container.width = width-sidebar_width
+            else:
+                self.ids.main_container.width = self.width
 
     def goToFirstScreen(self, *args):
         pass
@@ -159,17 +177,26 @@ class Manager(Screen):
         def spawnItems(menu_items):
             def addItems(*args):
                 for i in menu_items:
-                    self.ids.sidebar_container.add_widget(i)
+                    self.ids.sidebar_item_container.add_widget(i)
             task = Clock.schedule_once(addItems)
+
+        def deleteNonDefaultItem(*args):
+            items = self.ids.sidebar_item_container.children
+            # menghapus semua item kecuali index terakhir (karena reversed)
+            # yang merupakan default button
+            for i in items[0:-1]:
+                self.ids.sidebar_item_container.remove_widget(i)
 
         if screen == 'for_screen1':
             printLog('sidebar', 'for screen1')
             # bersihkan menu dari for_screen1
             # menghindari error ketika sidebar_place belum ditempati
-            if len(self.ids.sidebar_container.children) == 0:
+            if len(self.ids.sidebar_item_container.children) <= 1:
+                # 1 untuk default button exception
                 pass
             else:
-                self.ids.sidebar_container.clear_widgets()
+                remove_task = Clock.schedule_once(deleteNonDefaultItem)
+
             spawnItems([
                 SidebarItem('s1_m1'),
                 SidebarItem('s1_m2'),
@@ -178,8 +205,7 @@ class Manager(Screen):
 
         elif screen == 'for_screen2':
             printLog('sidebar', 'for screen2')
-            # bersihkan menu dari for_screen1
-            self.ids.sidebar_container.clear_widgets()
+            remove_task = Clock.schedule_once(deleteNonDefaultItem)
 
             spawnItems([
                 SidebarItem('s2_m1'),
@@ -192,27 +218,21 @@ class Manager(Screen):
         anim = Animation(
             myX = 0,
             duration = .3,
-            t = 'out_circ'
-        )
+            t = 'out_circ')
         anim.start(self.ids.sidebar)
 
-        def callback(*args):
-            printLog('sidebar', 'Showed')
-
-        anim.bind(on_complete = callback)
+        self._sidebar_shown_state = True
+        printLog('sidebar', 'Showed')
 
     def closeSidebar(self, *args):
         anim = Animation(
             myX = -1,
-            duration = .1,
-            t = 'out_circ'
-        )
+            duration = .4,
+            t = 'out_circ')
         anim.start(self.ids.sidebar)
 
-        def callback2(*args):
-            printLog('sidebar', 'Closed')
-
-        anim.bind(on_complete = callback2)
+        self._sidebar_shown_state = False
+        printLog('sidebar', 'Closed')
 
     def loginAuth(self, *args):
         email = self._screen1.ids.email_login_field.text

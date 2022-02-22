@@ -17,18 +17,21 @@
 #:include uix/sidebar_item.kv
 
 <Manager>:
+    canvas.before:
+        Color:
+            rgba: (251, 251, 251, 1) # main background color
+        Rectangle:
+            size: self.size
+            pos: self.pos
+
     # manager mencakup header untuk kedua screen
     # dan juga sebagai tempat untuk pergantian layout screen 1 dan 2
     GridLayout:
+        id: main_container
         cols: 1
-        size: root.width, root.height
-
-        canvas.before:
-            Color:
-                rgba: (251, 251, 251, 1) # main background color
-            Rectangle:
-                size: self.size
-                pos: self.pos
+        size_hint: None, 1
+        width: root.width
+        pos_hint: {'right':1}
 
         # HEADER
         BoxLayout:
@@ -38,12 +41,6 @@
             height: 54
 
             FloatLayout:
-                #canvas.before:
-                #    Color:
-                #        rgba: (0,0,0,1)
-                #    Line:
-                #        width: 1
-                #        rectangle: self.x, self.y, self.width, self.height
 
                 MenuButton: # 3 line button
                     id: manager_menu_btn
@@ -94,11 +91,19 @@
 
         # CONTENT LAYOUT PLACE
         FloatLayout:
+            id: screens_place
+            pos: self.parent.pos
+            pos_hint: {'right':1}
+            size_hint_x: None
+            width: self.parent.width
+
             BoxLayout:
                 id: first_screen_place
+                pos: self.parent.pos
 
             BoxLayout:
                 id: second_screen_place
+                pos: self.parent.pos
 
     FloatLayout:
         id: sidebar
@@ -108,20 +113,12 @@
         # -1 for unspawned
         myX: -1
 
-        Button:
-            id: sidebar_barrier
-            background_color: (0,0,0,0)
-            background_normal: ''
-
-            pos: self.parent.pos
-            size: self.parent.size
-
-            on_release: root.closeSidebar()
+        size_hint: None, 1
+        width: 300
 
         Button:
+            # sebagai sidebar.
             # menggunakan button agar tidak tembus saat areanya di tap
-            size_hint: None, 1
-            width: 300
 
             background_color: (0,0,0,0)
             background_normal: ''
@@ -146,13 +143,53 @@
                 pos: self.parent.pos
 
                 BoxLayout:
+                    id: sidebar_item_container
                     orientation: 'vertical'
-                    id: sidebar_container
                     pos: self.parent.pos
                     size_hint: None, None
                     width: self.parent.width
                     height: self.minimum_height
                     pos_hint: {'top':1}
+
+                    Button:
+                        id: default_sidebar_item1
+                        size_hint: None, None
+                        width: self.parent.width
+                        height: 54
+
+                        background_color: (0,0,0,0)
+                        background_normal: ''
+
+                        on_release: root.closeSidebar()
+
+                        canvas.before:
+                            Color:
+                                rgba: (0,0,0,.01 if self.state == 'normal' else .05)
+                            Rectangle:
+                                size: self.size
+                                pos: self.pos
+
+                        BoxLayout:
+                            pos: self.parent.pos
+                            size: self.parent.size
+                            orientation: 'horizontal'
+                            padding: 30
+                            spacing: 20
+
+                            MenuButton:
+                                feedback_size: 0
+                                pos_hint: {'center_y':.5}
+
+                            Label:
+                                text: "Tutup"
+                                font_size: 20
+                                color: (0,0,0,1)
+
+                                size_hint: None, None
+                                width: self.texture_size[0]
+                                height: self.texture_size[1]
+
+                                pos_hint: {'center_y':.5}
 
     FloatLayout:
         id: popup_place

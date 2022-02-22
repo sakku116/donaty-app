@@ -19,7 +19,7 @@ class SecondScreen(Screen):
         maka dari itu menggunakan boxlayout dan membuatnya
         responsive dengan cara manual
         '''
-        
+
     def scrollToUp(self, *args):
         '''
         scroll otomatis ke atas (donate card) saat tombol donate

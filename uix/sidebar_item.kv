@@ -1,9 +1,17 @@
 <SidebarItem>
     # @Button
     text: root.text
+    color: (0,0,0,1)
 
     background_normal: ''
-    background_color: (1,0,0,1)
+    background_color: (0,0,0,0)
 
     size_hint_y: None
     height: 100
+
+    canvas.before:
+        Color:
+            rgba: (0,0,0,0 if self.state == 'normal' else .05)
+        Rectangle:
+            size: self.size
+            pos: self.pos
