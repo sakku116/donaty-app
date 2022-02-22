@@ -177,25 +177,17 @@ class Manager(Screen):
         def spawnItems(menu_items):
             def addItems(*args):
                 for i in menu_items:
-                    self.ids.sidebar_item_container.add_widget(i)
+                    self.ids.sidebar_items_container.add_widget(i)
             task = Clock.schedule_once(addItems)
-
-        def deleteNonDefaultItem(*args):
-            items = self.ids.sidebar_item_container.children
-            # menghapus semua item kecuali index terakhir (karena reversed)
-            # yang merupakan default button
-            for i in items[0:-1]:
-                self.ids.sidebar_item_container.remove_widget(i)
 
         if screen == 'for_screen1':
             printLog('sidebar', 'for screen1')
             # bersihkan menu dari for_screen1
             # menghindari error ketika sidebar_place belum ditempati
-            if len(self.ids.sidebar_item_container.children) <= 1:
-                # 1 untuk default button exception
+            if len(self.ids.sidebar_items_container.children) == 0:
                 pass
             else:
-                remove_task = Clock.schedule_once(deleteNonDefaultItem)
+                self.ids.sidebar_items_container.clear_widgets()
 
             spawnItems([
                 SidebarItem('s1_m1'),
@@ -205,7 +197,7 @@ class Manager(Screen):
 
         elif screen == 'for_screen2':
             printLog('sidebar', 'for screen2')
-            remove_task = Clock.schedule_once(deleteNonDefaultItem)
+            self.ids.sidebar_items_container.clear_widgets()
 
             spawnItems([
                 SidebarItem('s2_m1'),

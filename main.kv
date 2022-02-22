@@ -127,54 +127,47 @@
 
             canvas.before:
                 Color:
-                    rgba: (0,0,0,1)
-                Rectangle:
-                    size: self.size
-                    pos: [self.x+2, self.y]
-
-                Color:
-                    rgba: (1,1,1,1)
+                    rgb: (252/255, 252/255, 252/255)
                 Rectangle:
                     size: self.size
                     pos: self.pos
 
-            FloatLayout:
+            GridLayout:
+                cols: 1
                 size: self.parent.size
                 pos: self.parent.pos
 
+                # header
                 BoxLayout:
-                    id: sidebar_item_container
-                    orientation: 'vertical'
-                    pos: self.parent.pos
-                    size_hint: None, None
-                    width: self.parent.width
-                    height: self.minimum_height
-                    pos_hint: {'top':1}
+                    orientatio: 'horizontal'
+                    size_hint: 1, None
+                    height: 65
 
                     Button:
-                        id: default_sidebar_item1
-                        size_hint: None, None
-                        width: self.parent.width
-                        height: 54
+                        id: close_sidebar_btn
 
-                        background_color: (0,0,0,0)
+                        background_color: (0,0,0,0 if self.state == 'normal' else .05)
                         background_normal: ''
 
                         on_release: root.closeSidebar()
 
                         canvas.before:
                             Color:
-                                rgba: (0,0,0,.01 if self.state == 'normal' else .05)
+                                rgba: (241/255, 241/255, 241/255, .4)
                             Rectangle:
                                 size: self.size
                                 pos: self.pos
 
                         BoxLayout:
-                            pos: self.parent.pos
-                            size: self.parent.size
                             orientation: 'horizontal'
                             padding: 30
                             spacing: 20
+
+                            pos: self.parent.pos
+
+                            size: self.parent.size
+                            size_hint: None, 1
+                            width: self.minimum_width
 
                             MenuButton:
                                 feedback_size: 0
@@ -182,7 +175,7 @@
 
                             Label:
                                 text: "Tutup"
-                                font_size: 20
+                                font_size: 15
                                 color: (0,0,0,1)
 
                                 size_hint: None, None
@@ -190,6 +183,25 @@
                                 height: self.texture_size[1]
 
                                 pos_hint: {'center_y':.5}
+
+                # line separator
+                Widget:
+                    size_hint: 1, None
+                    height: 2
+
+                    canvas.before:
+                        Color:
+                            rgba: (0,0,0,.4)
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size
+
+                # items container
+                BoxLayout:
+                    id: sidebar_items_container
+                    orientation: 'vertical'
+                    size_hint: 1, None
+                    height: self.minimum_height
 
     FloatLayout:
         id: popup_place
