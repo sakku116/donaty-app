@@ -82,7 +82,7 @@ class Manager(Screen):
         printLog('log','first screen removed from screen1_place')
 
     def firstScreenSetup(self, *args):
-        # set sidebar state screen for
+        # set sidebar screen state
         self.sidebarConfig('for_screen1')
 
         # bind tombol yang ada di first_screen karena berbeda parent class dengan manager
@@ -90,7 +90,7 @@ class Manager(Screen):
         self._screen1.ids.line_sparator_login_form.bind(on_release = self.removeLoginForm)
 
     def secondScreenSetup(self, *args):
-        # set sidebar state screen for
+        # set sidebar screen state
         self.sidebarConfig('for_screen2')
 
         # bind send_button
@@ -432,7 +432,6 @@ class MyApp(App):
         kv = Builder.load_file('main.kv')
         Window.size = (384, 680)
         Window.minimum_width, Window.minimum_height = Window.size
-        #changeStatusBarColor()
 
         return Manager()
 
