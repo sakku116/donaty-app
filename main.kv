@@ -116,6 +116,8 @@
             pos: self.parent.pos
             size: self.parent.size
 
+            on_release: root.closeSidebar()
+
         Button:
             # menggunakan button agar tidak tembus saat areanya di tap
             size_hint: None, 1

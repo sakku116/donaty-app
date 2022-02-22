@@ -64,9 +64,6 @@ class Manager(Screen):
         ]
         self._selected_person = ''
 
-        # bind sidebar_barrier
-        self.ids.sidebar_barrier.bind(on_release = self.showSidebar)
-
     def goToFirstScreen(self, *args):
         pass
 
@@ -200,8 +197,6 @@ class Manager(Screen):
         anim.start(self.ids.sidebar)
 
         def callback(*args):
-            self.ids.sidebar_barrier.unbind(on_release = self.showSidebar)
-            self.ids.sidebar_barrier.bind(on_release = self.closeSidebar)
             printLog('sidebar', 'Showed')
 
         anim.bind(on_complete = callback)
@@ -215,10 +210,6 @@ class Manager(Screen):
         anim.start(self.ids.sidebar)
 
         def callback2(*args):
-            #self.ids.manager_menu_btn.unbind(on_release = self.closeSidebar)
-            #self.ids.manager_menu_btn.bind(on_release = self.showSidebar)
-            self.ids.sidebar_barrier.unbind(on_release = self.closeSidebar)
-            self.ids.sidebar_barrier.bind(on_release = self.showSidebar)
             printLog('sidebar', 'Closed')
 
         anim.bind(on_complete = callback2)
