@@ -4,7 +4,7 @@ from kivy.core.window import Window
 class SecondScreen(Screen):
     def __init__(self, **kwargs):
         super(SecondScreen, self).__init__(**kwargs)
-        Window.bind(size=self.updateLayoutOrientation)
+        self.bind(size=self.updateLayoutOrientation)
 
     def updateLayoutOrientation(self, win, size):
         width, height = size
