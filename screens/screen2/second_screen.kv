@@ -16,9 +16,9 @@
             do_scroll_y: True
             #scroll_timeout: 75
             effect_cls: 'DampedScrollEffect'
-            
+
             # ScrollView Container
-            BoxLayout: 
+            BoxLayout:
                 # to center childern widget
                 orientation: 'vertical'
                 size_hint: 1, None
@@ -36,7 +36,7 @@
                     height: self.minimum_height
 
                     pos_hint: {'center_x':.5}
-                    
+
                     # Donate Card
                     DonateCard:
                         id: donate_card
@@ -44,11 +44,11 @@
                         creator_name: ''
                         creator_pict: ''
                         creator_rule: ''
-                        
+
                         pos_hint: {'top':1}
-                    
+
                     # profiles List Section
-                    BoxLayout: 
+                    BoxLayout:
                         id: profile_list_section_container
                         orientation: 'vertical'
                         size_hint: None, None
@@ -58,9 +58,9 @@
                         spacing: 15
 
                         pos_hint: {'top':1}
-                        
+
                         # Header
-                        FloatLayout: 
+                        FloatLayout:
                             size_hint: 1, None
                             height: 25
 
@@ -108,7 +108,7 @@
                                         size: [self.width+10, self.height+10]
                                         pos: [self.x - 10/2, self.y - 10/2]
                                         radius: [5]
-                        
+
                         # Profile Card List Container
                         BoxLayout:
                             id: profile_card_container
@@ -123,7 +123,7 @@
                             #ProfileCard:
                             #ProfileCard:
                             #ProfileCard:
-        
+
         # Main Navigation Bar
         FloatLayout:
             size_hint: 1, None
@@ -138,7 +138,7 @@
                 Rectangle:
                     pos: self.pos
                     size: self.size
-            
+
             # Barrier
             Button:
                 background_color: (0,0,0,0)
@@ -157,14 +157,14 @@
                 size_hint_y: None
                 height: 72
 
-                NavBarButton:
+                BottomNavbarItem:
                     icon: './assets/house.png'
 
-                NavBarButton:
+                BottomNavbarItem:
                     icon: './assets/magnify-glass.png'
 
-                NavBarButton:
+                BottomNavbarItem:
                     icon: './assets/currency-dollar.png'
 
-                NavBarButton:
+                BottomNavbarItem:
                     icon: './assets/user.png'

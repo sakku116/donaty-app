@@ -3,19 +3,18 @@
 #:include screens/screen2/second_screen.kv
 
 ############# UIX #############
-#:include uix/menu_button.kv
-#:include uix/search_button.kv
-#:include uix/paymtd_label.kv
-#:include uix/getStarted_button.kv
-#:include uix/send_button.kv
-#:include uix/loginInput_field.kv
-#:include uix/screen_barrier.kv
+#:include uix/bottom_navbar_item.kv
 #:include uix/donate_card.kv
-#:include uix/navBar_button.kv
-#:include uix/profile_card.kv
+#:include uix/getStarted_button.kv
+#:include uix/loginInput_field.kv
+#:include uix/menu_button.kv
+#:include uix/paymtd_label.kv
 #:include uix/popup.kv
-#:include uix/navbar_item.kv
-#:include uix/sidebar.kv
+#:include uix/profile_card.kv
+#:include uix/screen_barrier.kv
+#:include uix/search_button.kv
+#:include uix/send_button.kv
+#:include uix/sidebar_item.kv
 
 <Manager>:
     # manager mencakup header untuk kedua screen
@@ -50,6 +49,8 @@
                     id: manager_menu_btn
                     pos: self.parent.pos
                     pos_hint: {'center_y':.4}
+
+                    on_release: root.showSidebar()
 
                 # donaty text & logo
                 BoxLayout:
@@ -98,9 +99,58 @@
 
             BoxLayout:
                 id: second_screen_place
-                
+
     FloatLayout:
-        id: sidebar_place
+        id: sidebar
+
+        pos_hint: {'x':self.myX}
+        # 0 for spawned
+        # -1 for unspawned
+        myX: -1
+
+        Button:
+            id: sidebar_barrier
+            background_color: (0,0,0,0)
+            background_normal: ''
+
+            pos: self.parent.pos
+            size: self.parent.size
+
+        Button:
+            # menggunakan button agar tidak tembus saat areanya di tap
+            size_hint: None, 1
+            width: 300
+
+            background_color: (0,0,0,0)
+            background_normal: ''
+
+            pos: self.parent.pos
+
+            canvas.before:
+                Color:
+                    rgba: (0,0,0,1)
+                Rectangle:
+                    size: self.size
+                    pos: [self.x+2, self.y]
+
+                Color:
+                    rgba: (1,1,1,1)
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+
+            FloatLayout:
+                size: self.parent.size
+                pos: self.parent.pos
+
+                BoxLayout:
+                    orientation: 'vertical'
+                    id: sidebar_container
+                    pos: self.parent.pos
+                    size_hint: None, None
+                    width: self.parent.width
+                    height: self.minimum_height
+                    pos_hint: {'top':1}
 
     FloatLayout:
         id: popup_place

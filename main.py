@@ -63,12 +63,9 @@ class Manager(Screen):
             Person('Windo Anggara', 'Content Creator', './assets/creators/windo_anggara.jpg')
         ]
         self._selected_person = ''
-        
-        # sidebar config
-        self._sidebar_barrier = ScreenBarrier()
-        self._sidebar = Sidebar()
-        # bind tombol menu ke sidebar
-        self.ids.manager_menu_btn.bind(on_release = self.showSidebar)
+
+        # bind sidebar_barrier
+        self.ids.sidebar_barrier.bind(on_release = self.showSidebar)
 
     def goToFirstScreen(self, *args):
         pass
@@ -165,70 +162,63 @@ class Manager(Screen):
         def spawnItems(menu_items):
             def addItems(*args):
                 for i in menu_items:
-                    self._sidebar.ids.container.add_widget(i)
+                    self.ids.sidebar_container.add_widget(i)
             task = Clock.schedule_once(addItems)
 
         if screen == 'for_screen1':
             printLog('sidebar', 'for screen1')
             # bersihkan menu dari for_screen1
             # menghindari error ketika sidebar_place belum ditempati
-            if len(self.ids.sidebar_place.children) == 0:
+            if len(self.ids.sidebar_container.children) == 0:
                 pass
             else:
-                if len(self._sidebar.ids.container.children) == 0:
-                    self._sidebar.ids.container.clear_widgets()
+                self.ids.sidebar_container.clear_widgets()
             spawnItems([
-                NavbarItem('s1_m1'),
-                NavbarItem('s1_m2'),
-                NavbarItem('s1_m3'),
+                SidebarItem('s1_m1'),
+                SidebarItem('s1_m2'),
+                SidebarItem('s1_m3'),
             ])
 
         elif screen == 'for_screen2':
             printLog('sidebar', 'for screen2')
             # bersihkan menu dari for_screen1
-            self._sidebar.ids.container.clear_widgets()
+            self.ids.sidebar_container.clear_widgets()
 
             spawnItems([
-                NavbarItem('s2_m1'),
-                NavbarItem('s2_m2'),
-                NavbarItem('s2_m3'),
+                SidebarItem('s2_m1'),
+                SidebarItem('s2_m2'),
+                SidebarItem('s2_m3'),
             ])
 
     def showSidebar(self, *args):
-        # spawn
-        self.ids.sidebar_place.add_widget(self._sidebar_barrier)
-        self.ids.sidebar_place.add_widget(self._sidebar)
-        
         # animate
         anim = Animation(
             myX = 0,
             duration = .3,
             t = 'out_circ'
         )
-        anim.start(self._sidebar)
+        anim.start(self.ids.sidebar)
 
         def callback(*args):
-            self.ids.manager_menu_btn.unbind(on_release = self.showSidebar)
-            self.ids.manager_menu_btn.bind(on_release = self.closeSidebar)
-            self._sidebar_barrier.bind(on_release = self.closeSidebar)
+            self.ids.sidebar_barrier.unbind(on_release = self.showSidebar)
+            self.ids.sidebar_barrier.bind(on_release = self.closeSidebar)
             printLog('sidebar', 'Showed')
 
         anim.bind(on_complete = callback)
-        
+
     def closeSidebar(self, *args):
         anim = Animation(
             myX = -1,
             duration = .1,
             t = 'out_circ'
         )
-        anim.start(self._sidebar)
+        anim.start(self.ids.sidebar)
 
         def callback2(*args):
-            #self.ids.sidebar_place.remove_widget(barrier)
-            self.ids.manager_menu_btn.unbind(on_release = self.closeSidebar)
-            self.ids.manager_menu_btn.bind(on_release = self.showSidebar)
-            self.ids.sidebar_place.remove_widget(self._sidebar)
-            self.ids.sidebar_place.remove_widget(self._sidebar_barrier)
+            #self.ids.manager_menu_btn.unbind(on_release = self.closeSidebar)
+            #self.ids.manager_menu_btn.bind(on_release = self.showSidebar)
+            self.ids.sidebar_barrier.unbind(on_release = self.closeSidebar)
+            self.ids.sidebar_barrier.bind(on_release = self.showSidebar)
             printLog('sidebar', 'Closed')
 
         anim.bind(on_complete = callback2)
@@ -302,7 +292,7 @@ class Manager(Screen):
             # unbind manager.ids.menu_button + search_button > removeLoginForm
             self.ids.manager_menu_btn.unbind(on_release = self.removeLoginForm)
             self.ids.manager_search_btn.unbind(on_release = self.removeLoginForm)
-            
+
     def spawnPopup(self, color=(239/255, 105/255, 137/255, 1), title='title', message='message', *args):
         # declare popup
         popup = MyPopup()
@@ -323,7 +313,7 @@ class Manager(Screen):
 
         # task untuk remove popup
         task = Clock.schedule_once(partial(
-            self.removePopup, 
+            self.removePopup,
             popup), 4)
 
         # func untuk membatalkan task
@@ -345,7 +335,7 @@ class Manager(Screen):
         )
         anim.start(popup_instance)
         anim.bind(on_complete = remove)
-        
+
     def showLessPeopleSection(self, *args):
         profile_section = self._screen2.ids.profile_card_container
 
@@ -454,14 +444,14 @@ class MyApp(App):
         #changeStatusBarColor()
 
         return Manager()
-        
+
     def changeStatusBarColor(self):
         from jnius import autoclass
-        
+
         WindowManager = autoclass('android.view.WindowManager')
         R = autoclass('android.R')
         activity = autoclass('My.PythonActivity').mActivity
-        
+
         window = activity.getWindow();
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)

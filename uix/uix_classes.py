@@ -8,6 +8,12 @@ from kivy.uix.floatlayout import FloatLayout
 
 from kivy.animation import Animation
 
+'''
+file ini berisi python class dari uix yang sudah dibuat sendiri.
+jika uix tidak mempunyai class di sini, maka uix tersebut sudah
+di define menggunakan @widget dalam kv class uix tersebut
+'''
+
 class GetStartedButton(Button):
     def __init__(self, **kwargs):
         super(GetStartedButton, self).__init__(**kwargs)
@@ -40,18 +46,7 @@ class ProfileCard(FloatLayout):
 class MyPopup(Button):
     pass
 
-class Sidebar(Button):
-    def __init__(self, **kwargs):
-        super(Sidebar, self).__init__(**kwargs)
-        self.spawnUnLogedinElement()
-
-    def spawnUnLogedinElement(self, *args): # (for screen 1)
-        pass
-    
-    def spawnLogedinElement(self, *args): # (for screen 2)
-        pass
-
-class NavbarItem(Button):
+class SidebarItem(Button):
     def __init__(self, name='item'):
-        super(NavbarItem, self).__init__()
+        super(SidebarItem, self).__init__()
         self.text = name
