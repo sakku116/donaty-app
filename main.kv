@@ -15,6 +15,7 @@
 #:include uix/search_button.kv
 #:include uix/send_button.kv
 #:include uix/sidebar_item.kv
+#:include uix/signout_btn.kv
 
 <Manager>:
     canvas.before:
@@ -202,6 +203,14 @@
                     orientation: 'vertical'
                     size_hint: 1, None
                     height: self.minimum_height
+
+            BoxLayout:
+                id: sidebar_footer_container
+                pos: self.parent.pos
+
+                size_hint: None, None
+                width: self.parent.width
+                height: 65
 
     FloatLayout:
         id: popup_place

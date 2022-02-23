@@ -67,6 +67,9 @@ class Manager(Screen):
 
         self._sidebar_shown_state = False
 
+        # set sidebar screen state
+        self.sidebarConfig('for_screen1')
+
     def updateSidebarLayouting(self, win, size):
         width, height = size
 
@@ -83,9 +86,22 @@ class Manager(Screen):
                 self.ids.main_container.width = self.width
 
     def goToFirstScreen(self, *args):
-        pass
+        # set sidebar screen state
+        self.sidebarConfig('for_screen1')
+        close_sidebar = self.closeSidebar()
+
+        screen1_place = self.ids.first_screen_place
+        screen1_place.add_widget(self._screen1)
+
+        screen2_place = self.ids.second_screen_place
+        screen2_place.remove_widget(self._screen2)
+
 
     def goToSecondScreen(self, *args):
+        # set sidebar screen state
+        self.sidebarConfig('for_screen2')
+        close_sidebar_task = Clock.schedule_once(self.closeSidebar)
+
         # spawn second_screen
         screen2_place = self.ids.second_screen_place
         screen2_place.add_widget(self._screen2)
@@ -100,17 +116,11 @@ class Manager(Screen):
         printLog('log','first screen removed from screen1_place')
 
     def firstScreenSetup(self, *args):
-        # set sidebar screen state
-        self.sidebarConfig('for_screen1')
-
         # bind tombol yang ada di first_screen karena berbeda parent class dengan manager
         self._screen1.ids.get_started_btn.bind(on_release = self.showLoginForm)
         self._screen1.ids.line_sparator_login_form.bind(on_release = self.removeLoginForm)
 
     def secondScreenSetup(self, *args):
-        # set sidebar screen state
-        self.sidebarConfig('for_screen2')
-
         # bind send_button
         self._screen2.ids.donate_card.ids.send_button.bind(on_release = self.sendDonate)
 
@@ -188,6 +198,10 @@ class Manager(Screen):
                 pass
             else:
                 self.ids.sidebar_items_container.clear_widgets()
+            if len(self.ids.sidebar_footer_container.children) == 0:
+                pass
+            else:
+                self.ids.sidebar_footer_container.clear_widgets()
 
             spawnItems([
                 SidebarItem('s1_m1'),
@@ -204,6 +218,11 @@ class Manager(Screen):
                 SidebarItem('s2_m2'),
                 SidebarItem('s2_m3'),
             ])
+
+            # spawn signout btn
+            signout_button = SignoutButton()
+            signout_button.bind(on_release = self.goToFirstScreen)
+            self.ids.sidebar_footer_container.add_widget(signout_button)
 
     def showSidebar(self, *args):
         # animate

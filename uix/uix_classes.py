@@ -50,3 +50,6 @@ class SidebarItem(Button):
     def __init__(self, name='item'):
         super(SidebarItem, self).__init__()
         self.text = name
+
+class SignoutButton(Button):
+    pass

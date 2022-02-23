@@ -1,0 +1,14 @@
+<SignoutButton>:
+    id: signout_btn
+    text: 'Sign Out'
+    color: (0,0,0,.8)
+
+    background_color: (0,0,0,0)
+    background_normal: ''
+
+    canvas.before:
+        Color:
+            rgba: (241/255, 241/255, 241/255, 0 if self.state == 'normal' else .9)
+        Rectangle:
+            size: self.size
+            pos: self.pos
