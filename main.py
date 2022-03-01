@@ -20,7 +20,9 @@ from kivy.clock import Clock
 '''
 penggunaan Clock.schedule_once dapat mengoptimalkan kinerja aplikasi
 karena tidak perlu menunggu for loop dieksekusi.
-konsepnya seperti async dan await
+konsepnya seperti async dan await.
+schedule_once sangat membantu untuk mengurutkan event event, atau
+membuat event terjadi bersamaan
 '''
 
 # IMPORT UTILITIES
@@ -46,7 +48,7 @@ class Manager(Screen):
         # define first screen class
         self._screen1 = FirstScreen()
         self.ids.first_screen_place.add_widget(self._screen1)
-        self.firstScreenSetup()
+        Clock.schedule_once(self.firstScreenSetup)
 
         # define second screen class
         self._screen2 = SecondScreen()
@@ -86,34 +88,47 @@ class Manager(Screen):
                 self.ids.main_container.width = self.width
 
     def goToFirstScreen(self, *args):
+        def callback(*args):
+            screen1_place = self.ids.first_screen_place
+            screen1_place.add_widget(self._screen1)
+            printLog('log','first_screen created in screen1_place')
+
+            screen2_place = self.ids.second_screen_place
+            screen2_place.remove_widget(self._screen2)
+            printLog('log','second screen removed from screen2_place')
+
+        self.closeSidebar()
+
+        # menunggu sidebar ditutup selama .2 detik
+        Clock.schedule_once(callback, .2)
+
         # set sidebar screen state
         self.sidebarConfig('for_screen1')
-        close_sidebar = self.closeSidebar()
-
-        screen1_place = self.ids.first_screen_place
-        screen1_place.add_widget(self._screen1)
-
-        screen2_place = self.ids.second_screen_place
-        screen2_place.remove_widget(self._screen2)
-
 
     def goToSecondScreen(self, *args):
-        # set sidebar screen state
-        self.sidebarConfig('for_screen2')
-        close_sidebar_task = Clock.schedule_once(self.closeSidebar)
+        def callback(*args):
+            # spawn second_screen
+            screen2_place = self.ids.second_screen_place
+            screen2_place.add_widget(self._screen2)
+            self.secondScreenSetup()
 
-        # spawn second_screen
-        screen2_place = self.ids.second_screen_place
-        screen2_place.add_widget(self._screen2)
-        self.secondScreenSetup()
+            printLog('log','second_screen created in screen2_place')
 
-        printLog('log','second_screen created in screen2_place')
+            # remove first_screen
+            screen1_place = self.ids.first_screen_place
+            screen1_place.remove_widget(self._screen1)
 
-        # remove first_screen
-        screen1_place = self.ids.first_screen_place
-        screen1_place.remove_widget(self._screen1)
+            printLog('log','first screen removed from screen1_place')
 
-        printLog('log','first screen removed from screen1_place')
+        if self._sidebar_shown_state == True:
+            self.closeSidebar()
+            # menunggu sidebar ditutup selama .2 detik
+            Clock.schedule_once(callback, .2)
+        else:
+            Clock.schedule_once(callback)
+
+        # mencegah config berjalan saat proses closeSidebar() berjalan
+        Clock.schedule_once(partial(self.sidebarConfig, 'for_screen2'), .2)
 
     def firstScreenSetup(self, *args):
         # bind tombol yang ada di first_screen karena berbeda parent class dengan manager
@@ -141,7 +156,7 @@ class Manager(Screen):
             random_choosen_person.photo_path
         )
 
-        self.showLessPeopleSection()
+        Clock.schedule_once(self.showLessPeopleSection)
 
         # bind view all button untuk auto scroll
         self._screen2.ids.view_all_btn.bind(on_release = self._screen2.scrollToDown)
@@ -153,7 +168,7 @@ class Manager(Screen):
 
         self._selected_person = name
 
-        self.resetDonateCardForm()
+        Clock.schedule_once(self.resetDonateCardForm)
 
     def resetDonateCardForm(self, *args):
         # mereset form selected_person diperbarui
@@ -183,12 +198,14 @@ class Manager(Screen):
         printLog('donate card info', money)
         printLog('donate card info', message)
 
-    def sidebarConfig(self, screen):
+    def sidebarConfig(self, screen, *args):
         def spawnItems(menu_items):
             def addItems(*args):
                 for i in menu_items:
                     self.ids.sidebar_items_container.add_widget(i)
             task = Clock.schedule_once(addItems)
+
+        self._sidebar_screen_state = screen
 
         if screen == 'for_screen1':
             printLog('sidebar', 'for screen1')
