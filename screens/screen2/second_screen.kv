@@ -12,6 +12,7 @@
 
         ScrollView:
             id: screen2_scrollview
+
             do_scroll_x: False
             do_scroll_y: True
             #scroll_timeout: 75
@@ -19,13 +20,15 @@
 
             # ScrollView Container
             BoxLayout:
-                # to center childern widget
+                id: sub_screen_place
+                # spawn sub screen in this class
+
                 orientation: 'vertical'
                 size_hint: 1, None
                 height: self.minimum_height
 
                 BoxLayout:
-                    id: home_container
+                    id: home_section
                     orientation: 'vertical'
                     spacing: 45
 

@@ -9,7 +9,7 @@ class SecondScreen(Screen):
     def updateLayoutOrientation(self, win, size):
         width, height = size
 
-        self.ids.home_container.orientation = (
+        self.ids.home_section.orientation = (
             'vertical' if width <= 725 else 'horizontal'
         )
         '''

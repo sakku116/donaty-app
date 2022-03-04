@@ -470,11 +470,17 @@ class MyApp(App):
 
         '''
         [STRUCTURE]
+        
         <Manager>:
-            # import all of kv file and it used by the children
+            # import all of custom uix.kv file and it will be used by the children-
             # without importing the file again inside of children class
+
             <FirstScreen>:
+                # this class contain unloged in screen state.
+
             <SecondScreen>:
+                # this class contain loged in screen state.
+                # this class/screen contain sub screen
         '''
 
         kv = Builder.load_file('main.kv')
