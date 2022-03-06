@@ -32,7 +32,7 @@ from functools import partial
 # IMPORT FILES
 from screens import FirstScreen
 from screens import SecondScreen
-from uix.uix_classes import *
+from widgets import *
 
 def printLog(event, text):
     print(f'({event}) = {text}')
