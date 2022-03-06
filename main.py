@@ -18,20 +18,17 @@ from kivy.animation import Animation
 from kivy.uix.screenmanager import Screen
 from kivy.clock import Clock
 '''
-penggunaan Clock.schedule_once dapat mengoptimalkan kinerja aplikasi
-karena tidak perlu menunggu for loop dieksekusi.
-konsepnya seperti async dan await.
+penggunaan Clock.schedule_once dapat mengoptimalkan kinerja aplikasi.
 schedule_once sangat membantu untuk mengurutkan event event, atau
-membuat event terjadi bersamaan
+membuat event terjadi secara bersamaan
 '''
 
 from datetime import datetime
 from random import randint, sample
 from functools import partial
 
-# IMPORT FILES
-from screens import FirstScreen
-from screens import SecondScreen
+# IMPORT LOCAL MODULES
+from screens import FirstScreen, SecondScreen
 from widgets import *
 
 def printLog(event, text):
