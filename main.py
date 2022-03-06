@@ -2,13 +2,13 @@
 C:/py_venv/kivy_venv/scripts/activate
 '''
 
-'''
+
 # konfigurasi untuk openGl dibawah versi 2
-from kivy import Config
-Config.set('graphics', 'multisamples', '0')
-from kivy import require
+#import os 
+from kivy import Config, require
+#os.environ['KIVY_GL_BACKEND'] = 'angle_sdl2'
 require('2.0.0')
-'''
+Config.set('graphics', 'multisamples', '0')
 
 #from kivy.properties import NumericProperty
 from kivy.app import App
@@ -25,20 +25,17 @@ schedule_once sangat membantu untuk mengurutkan event event, atau
 membuat event terjadi bersamaan
 '''
 
-# IMPORT UTILITIES
 from datetime import datetime
 from random import randint, sample
 from functools import partial
 
 # IMPORT FILES
-from screens.screen1.first_screen import FirstScreen
-from screens.screen2.second_screen import SecondScreen
+from screens import FirstScreen
+from screens import SecondScreen
 from uix.uix_classes import *
 
 def printLog(event, text):
     print(f'({event}) = {text}')
-
-############## SCREEN ##############
 
 class Manager(Screen):
     def __init__(self, **kwargs):
@@ -502,4 +499,4 @@ class MyApp(App):
         window.setStatusBarColor(activity.getResources().getColor(R.color.my_statusbar_color));
 
 if __name__ == '__main__':
-    MyApp().run()
+    MyApp().run()        
