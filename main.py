@@ -2,7 +2,6 @@
 C:/py_venv/kivy_venv/scripts/activate
 '''
 
-
 # konfigurasi untuk openGl dibawah versi 2
 #import os 
 from kivy import Config, require
