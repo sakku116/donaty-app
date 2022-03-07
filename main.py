@@ -36,7 +36,7 @@ def printLog(event, text):
 class Manager(Screen):
     def __init__(self, **kwargs):
         super(Manager, self).__init__(**kwargs)
-        Window.bind(size=self.updateSidebarLayouting)
+        Window.bind(size=self.updateLayout)
 
         # define first screen class
         self._screen1 = FirstScreen()
@@ -65,7 +65,7 @@ class Manager(Screen):
         # set sidebar screen state
         self.sidebarConfig('for_screen1')
 
-    def updateSidebarLayouting(self, win, size):
+    def updateLayout(self, win, size):
         width, height = size
 
         sidebar_width = self.ids.sidebar.width
