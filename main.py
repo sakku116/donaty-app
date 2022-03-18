@@ -35,7 +35,7 @@ def printLog(event, text):
 class Manager(Screen):
     def __init__(self, **kwargs):
         super(Manager, self).__init__(**kwargs)
-        Window.bind(size=self.updateLayout)
+        self.bind(size=self.updateLayout)
 
         # define first screen class
         self._screen1 = FirstScreen()
@@ -74,8 +74,13 @@ class Manager(Screen):
         else:
             if self._sidebar_shown_state == True:
                 # ubah layout dengan mengurangi width dari screens_place
-                # dan membuatnya stuk ke kanan (bisa dilakukan karena parentnya adalah floatlayout)
-                self.ids.main_container.width = width-sidebar_width
+                # dan membuatnya stuck ke kanan (bisa dilakukan karena parentnya adalah floatlayout)
+                #self.ids.main_container.width = width-sidebar_width
+                Animation(
+                    duration = .7,
+                    width = width-sidebar_width,
+                    t = 'out_circ'
+                ).start(self.ids.main_container)
             else:
                 self.ids.main_container.width = self.width
 
@@ -244,15 +249,19 @@ class Manager(Screen):
         self._sidebar_shown_state = True
         printLog('sidebar', 'Showed')
 
+        self.updateLayout(None, self.size)
+
     def closeSidebar(self, *args):
         anim = Animation(
             myX = -1,
-            duration = .4,
+            duration = .5,
             t = 'out_circ')
         anim.start(self.ids.sidebar)
 
         self._sidebar_shown_state = False
         printLog('sidebar', 'Closed')
+
+        self.updateLayout(None, self.size)
 
     def loginAuth(self, *args):
         email = self._screen1.ids.email_login_field.text
