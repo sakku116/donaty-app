@@ -1,13 +1,12 @@
 '''
 C:/py_venv/kivy_venv/scripts/activate
-'''
-
 # konfigurasi untuk openGl dibawah versi 2
-#import os 
+import os 
+os.environ['KIVY_GL_BACKEND'] = 'angle_sdl2'
 from kivy import Config, require
-#os.environ['KIVY_GL_BACKEND'] = 'angle_sdl2'
 require('2.0.0')
 Config.set('graphics', 'multisamples', '0')
+'''
 
 #from kivy.properties import NumericProperty
 from kivy.app import App
