@@ -27,6 +27,7 @@ from functools import partial
 
 # IMPORT LOCAL MODULES
 from screens import FirstScreen, SecondScreen
+#from pages import HomePage
 from widgets import *
 
 def printLog(event, text):
@@ -134,11 +135,11 @@ class Manager(Screen):
 
     def secondScreenSetup(self, *args):
         # bind send_button
-        self._screen2.ids.donate_card.ids.send_button.bind(on_release = self.sendDonate)
+        self._screen2._home_page.ids.donate_card.ids.send_button.bind(on_release = self.sendDonate)
 
         # setting tanggal
         date = str(datetime.now().strftime('%d/%m/%Y'))
-        self._screen2.ids.donate_card.datetime = date
+        self._screen2._home_page.ids.donate_card.datetime = date
 
         # mengacak _people
         self._people = sample(self._people, k=len(self._people))
@@ -156,12 +157,12 @@ class Manager(Screen):
         Clock.schedule_once(self.showLessPeopleSection)
 
         # bind view all button untuk auto scroll
-        self._screen2.ids.view_all_btn.bind(on_release = self._screen2.scrollToDown)
+        self._screen2._home_page.ids.view_all_btn.bind(on_release = self._screen2.scrollToDown)
 
     def updateDonateCard(self, name, role, pict, *args):
-        self._screen2.ids.donate_card.person_name = name
-        self._screen2.ids.donate_card.person_role = role
-        self._screen2.ids.donate_card.person_pict = pict
+        self._screen2._home_page.ids.donate_card.person_name = name
+        self._screen2._home_page.ids.donate_card.person_role = role
+        self._screen2._home_page.ids.donate_card.person_pict = pict
 
         self._selected_person = name
 
@@ -169,13 +170,13 @@ class Manager(Screen):
 
     def resetDonateCardForm(self, *args):
         # mereset form selected_person diperbarui
-        self._screen2.ids.donate_card.ids.money_total.text = '0'
-        self._screen2.ids.donate_card.ids.message_form.text = ''
+        self._screen2._home_page.ids.donate_card.ids.money_total.text = '0'
+        self._screen2._home_page.ids.donate_card.ids.message_form.text = ''
 
     def sendDonate(self, *args):
-        person = self._screen2.ids.donate_card.person_name
-        money = self._screen2.ids.donate_card.ids.money_total.text
-        message = self._screen2.ids.donate_card.ids.message_form.text
+        person = self._screen2._home_page.ids.donate_card.person_name
+        money = self._screen2._home_page.ids.donate_card.ids.money_total.text
+        message = self._screen2._home_page.ids.donate_card.ids.message_form.text
 
         if money == '0':
             self.spawnPopup(
@@ -377,7 +378,7 @@ class Manager(Screen):
         anim.bind(on_complete = remove)
 
     def showLessPeopleSection(self, *args):
-        profile_section = self._screen2.ids.profile_card_container
+        profile_section = self._screen2._home_page.ids.profile_card_container
 
         if len(profile_section.children) == len(self._people):
             profile_section.clear_widgets()
@@ -413,11 +414,11 @@ class Manager(Screen):
                 people_index -= 1
         Clock.schedule_once(setPersonInfo)
 
-        self._screen2.ids.view_all_btn.unbind(on_release = self.showLessPeopleSection)
-        self._screen2.ids.view_all_btn.bind(on_release = self.showMorePeopleSection)
+        self._screen2._home_page.ids.view_all_btn.unbind(on_release = self.showLessPeopleSection)
+        self._screen2._home_page.ids.view_all_btn.bind(on_release = self.showMorePeopleSection)
 
     def showMorePeopleSection(self, instance):
-        profile_section = self._screen2.ids.profile_card_container
+        profile_section = self._screen2._home_page.ids.profile_card_container
 
         # menambah profile card
         profile_card_showed_total = len(profile_section.children)
@@ -448,8 +449,8 @@ class Manager(Screen):
                     people_index -= 1
         Clock.schedule_once(setPersonInfo)
 
-        self._screen2.ids.view_all_btn.unbind(on_release = self.showMorePeopleSection)
-        self._screen2.ids.view_all_btn.bind(on_release = self.showLessPeopleSection)
+        self._screen2._home_page.ids.view_all_btn.unbind(on_release = self.showMorePeopleSection)
+        self._screen2._home_page.ids.view_all_btn.bind(on_release = self.showLessPeopleSection)
         # unbind view all button untuk auto scroll
         #self._screen2.ids.view_all_btn.unbind(on_release = self.scrollToDown)
 

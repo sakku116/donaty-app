@@ -1,0 +1,99 @@
+<HomePage>
+    id: home_page # home_section
+    orientation: 'vertical'
+    spacing: 45
+
+    padding: [30, 20, 30, 10]
+
+    size_hint: None, None
+    width: self.minimum_width
+    height: self.minimum_height
+
+    pos_hint: {'center_x':.5}
+
+    # Donate Card
+    DonateCard:
+        id: donate_card
+        datetime: '00/00/00'
+        creator_name: ''
+        creator_pict: ''
+        creator_rule: ''
+
+        pos_hint: {'top':1}
+
+    # profiles List Section
+    BoxLayout:
+        id: profile_list_section_container
+        orientation: 'vertical'
+        size_hint: None, None
+        height: self.minimum_height
+        width: 322
+
+        spacing: 15
+
+        pos_hint: {'top':1}
+
+        # Header
+        FloatLayout:
+            size_hint: 1, None
+            height: 25
+
+            Label:
+                text: 'Follow To'
+                color: (0,0,0,1)
+                font_size: '20sp'
+                font_name: './assets/fonts/Roboto/Roboto-Regular.ttf'
+
+                size_hint: None, None
+                width: self.texture_size[0]
+                height: self.texture_size[1]
+
+
+                pos: self.parent.pos
+                pos_hint: {'center_y':.5}
+
+                text_size: None, None
+                valign: 'center'
+                halign: 'center'
+
+            Button:
+                id: view_all_btn
+                text: 'View All'
+                font_size: '13sp'
+                font_name: './assets/fonts/Roboto/Roboto-Regular.ttf'
+                color: (0,0,0 if self.state == 'normal' else 1,.5)
+
+                background_color: (0,0,0,0)
+                background_normal: ''
+
+                size_hint: None, None
+                width: self.texture_size[0]
+                height: self.texture_size[1]
+
+                pos: self.parent.pos
+                pos_hint: {'right': 1, 'center_y':.5}
+
+                #on_release: root.scrollToDown()
+
+                canvas.before:
+                    Color:
+                        rgba: (0,0,0,0 if self.state == 'normal' else .1)
+                    RoundedRectangle:
+                        size: [self.width+10, self.height+10]
+                        pos: [self.x - 10/2, self.y - 10/2]
+                        radius: [5]
+
+        # Profile Card List Container
+        BoxLayout:
+            id: profile_card_container
+            orientation: 'vertical'
+
+            size_hint: 1, None
+            height: self.minimum_height
+
+            spacing: 15
+
+            #ProfileCard:
+            #ProfileCard:
+            #ProfileCard:
+            #ProfileCard:
