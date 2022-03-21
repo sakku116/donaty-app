@@ -16,16 +16,40 @@
             do_scroll_x: False
             do_scroll_y: True
             #scroll_timeout: 75
+            scroll_distance: 60
             effect_cls: 'DampedScrollEffect'
 
             # ScrollView Container
-            BoxLayout:
-                id: page_place
-                # spawn sub screen in this class
-
+            FloatLayout:
                 orientation: 'vertical'
                 size_hint: 1, None
-                height: self.minimum_height
+                height: page_place.height
+
+                pos: self.parent.pos
+
+                Widget:
+                    id: top_scroll_anchor
+                    size_hint: 1, None
+                    height: 0
+
+                    pos: self.parent.pos
+                    pos_hint: {'top':1}
+
+                BoxLayout:
+                    id: page_place
+                    # spawn sub screen in this class
+
+                    orientation: 'vertical'
+                    size_hint: 1, None
+                    height: self.minimum_height
+
+                Widget:
+                    id: bottom_scroll_anchor
+                    size_hint: 1, None
+                    height: 0
+
+                    pos: self.parent.pos
+                    pos_hint: {'bottom':1}
                 
         # bottom Navigation Bar
         FloatLayout:

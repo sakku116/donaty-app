@@ -378,6 +378,8 @@ class Manager(Screen):
         anim.bind(on_complete = remove)
 
     def showLessPeopleSection(self, *args):
+        self._screen2._home_page.ids.view_all_btn.text = 'view all'
+        
         profile_section = self._screen2._home_page.ids.profile_card_container
 
         if len(profile_section.children) == len(self._people):
@@ -418,6 +420,8 @@ class Manager(Screen):
         self._screen2._home_page.ids.view_all_btn.bind(on_release = self.showMorePeopleSection)
 
     def showMorePeopleSection(self, instance):
+        self._screen2._home_page.ids.view_all_btn.text = 'view less'
+
         profile_section = self._screen2._home_page.ids.profile_card_container
 
         # menambah profile card

@@ -32,13 +32,13 @@ class SecondScreen(Screen):
         scroll otomatis ke atas (donate card) saat tombol donate
         di profile card di tap
         '''
-        donate_card_id = self._home_page.ids.donate_card
-        self.ids.screen2_scrollview.scroll_to(donate_card_id)
+        top_element = self.ids.top_scroll_anchor
+        self.ids.screen2_scrollview.scroll_to(top_element)
 
     def scrollToDown(self, *args):
         '''
         scroll otomatis ke bawah (person section) saat tombol
         view all di tap
         '''
-        bottom_profile_card = self._home_page.ids.profile_list_section_container
-        self.ids.screen2_scrollview.scroll_to(bottom_profile_card)
+        bottom_element = self.ids.bottom_scroll_anchor
+        self.ids.screen2_scrollview.scroll_to(bottom_element)
