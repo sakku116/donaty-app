@@ -1,5 +1,6 @@
 
 donaty.code-workspace
+__pycache__/
 screens/__pycache__/
 widgets/__pycache__/
 screens/pages/__pycache__/
