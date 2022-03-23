@@ -10,7 +10,7 @@ This app using kivy `multisamples = 0` to avoid OpenGL 2.0 not detected error on
 even the machine have supported openGL version already.
 It should be run properly in most machines that have error on the OpenGL version.
 
-> Some machines may be don't work with that method. But, you can try another way
+Some machines may be don't work with that method. But, you can try another way
 to avoid the OpenGL error. You can add this lines of code to `main.py` file.
 ```
 import os
