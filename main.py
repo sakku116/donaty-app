@@ -1,6 +1,7 @@
 '''
 C:/py_venv/kivy_venv/scripts/activate
-# konfigurasi untuk openGl dibawah versi 2
+
+[konfigurasi untuk openGl dibawah versi 2]
 import os 
 os.environ['KIVY_GL_BACKEND'] = 'angle_sdl2'
 from kivy import Config, require
@@ -12,26 +13,12 @@ from kivy.app import App
 from kivy.core.window import Window
 from kivy.lang import Builder
 
-from manager import Manager
-
 class MyApp(App):
     def build(self):
-        '''
-        [STRUCTURE]
-        
-        <Manager>:
-            # import all of custom uix.kv file and it will be used by the children-
-            # without importing the file again inside of children class
+        # main widget (@screen) class
+        from manager import Manager
+        main_widget = Builder.load_file('manager.kv')
 
-            <FirstScreen>:
-                # this class contain unloged in screen state.
-
-            <SecondScreen>:
-                # this class contain loged in screen state.
-                # this class/screen contain sub screen (pages)
-        '''
-
-        kv = Builder.load_file('manager.kv')
         Window.size = (384, 680)
         Window.minimum_width, Window.minimum_height = Window.size
 

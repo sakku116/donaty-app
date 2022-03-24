@@ -20,6 +20,16 @@
 #:include widgets/sidebar_item.kv
 #:include widgets/signout_btn.kv
 
+#[STRUCTURE]
+#<Manager>:
+#    # import all of custom uix.kv file and it will be used by the children-
+#    # without importing the file again inside of children class
+#    <FirstScreen>:
+#        # unloged in screen.
+#    <SecondScreen>:
+#        # loged in screen.
+#        # this class/screen contain sub screen (pages).
+
 <Manager>:
     canvas.before:
         Color:
