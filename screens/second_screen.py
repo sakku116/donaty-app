@@ -1,5 +1,7 @@
 from kivy.uix.screenmanager import Screen
-from .pages import HomePage
+from .pages import HomePage, SearchPage
+
+from kivy.clock import Clock
 
 class SecondScreen(Screen):
     def __init__(self, **kwargs):
@@ -8,6 +10,7 @@ class SecondScreen(Screen):
 
         self._page_container = self.ids.page_place
         self._home_page = HomePage()
+        self._search_page = SearchPage()
 
         # spawn home_page first
         self._page_container.add_widget(self._home_page)
