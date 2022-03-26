@@ -5,7 +5,7 @@ from functools import partial
 
 from logger import printLog
 from screens import FirstScreen, SecondScreen
-from widgets import *
+from widgets import MyPopup, SidebarItem, SignoutButton
 
 class Manager(Screen):
     def __init__(self, **kwargs):
