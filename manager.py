@@ -197,6 +197,3 @@ class Manager(Screen):
         )
         anim.start(popup_instance)
         anim.bind(on_complete = remove)
-
-    def goToPage(self, current_page, next_page):
-        pass
