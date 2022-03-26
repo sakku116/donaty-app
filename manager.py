@@ -7,25 +7,24 @@ from random import randint, sample
 from functools import partial
 
 # IMPORT LOCAL MODULES
+from logger import printLog
+
 from screens import FirstScreen, SecondScreen
 from widgets import *
 from person import Person
-
-def printLog(event, text):
-    print(f'({event}) = {text}')
 
 class Manager(Screen):
     def __init__(self, **kwargs):
         super(Manager, self).__init__(**kwargs)
         self.bind(size=self.updateLayout)
 
-        # define first screen class
+        # declare screen class
         self._screen1 = FirstScreen()
+        self._screen2 = SecondScreen()
+
+        # spawn first screen
         self.ids.first_screen_place.add_widget(self._screen1)
         Clock.schedule_once(self.firstScreenSetup)
-
-        # define second screen class
-        self._screen2 = SecondScreen()
 
         # declare people
         self._people = [
@@ -129,7 +128,7 @@ class Manager(Screen):
         random_integer = randint(0, len(self._people)-1)
         random_choosen_person = self._people[random_integer]
 
-        self.updateDonateCard(
+        self._screen2.updateDonateCard(
             random_choosen_person.name,
             random_choosen_person.role,
             random_choosen_person.photo_path
@@ -139,20 +138,6 @@ class Manager(Screen):
 
         # bind view all button untuk auto scroll
         self._screen2._home_page.ids.view_all_btn.bind(on_release = self._screen2.scrollToDown)
-
-    def updateDonateCard(self, name, role, pict, *args):
-        self._screen2._home_page.ids.donate_card.person_name = name
-        self._screen2._home_page.ids.donate_card.person_role = role
-        self._screen2._home_page.ids.donate_card.person_pict = pict
-
-        self._selected_person = name
-
-        Clock.schedule_once(self.resetDonateCardForm)
-
-    def resetDonateCardForm(self, *args):
-        # mereset form selected_person diperbarui
-        self._screen2._home_page.ids.donate_card.ids.money_total.text = '0'
-        self._screen2._home_page.ids.donate_card.ids.message_form.text = ''
 
     def sendDonate(self, *args):
         person = self._screen2._home_page.ids.donate_card.person_name
@@ -171,7 +156,7 @@ class Manager(Screen):
                 'Donasi Berhasil!!!',
                 f'Terimakasih, Kamu telah mengirimkan donasi kepada [color=0800EF]{person}[/color] sebesar [color=EC0101]${money}[/color]'
             )
-            self.resetDonateCardForm()
+            self._screen2.resetDonateCardForm()
 
         printLog('donate card info', person)
         printLog('donate card info', money)
@@ -386,7 +371,7 @@ class Manager(Screen):
 
                 child.ids.pick_person_btn.bind(
                     on_release = partial(
-                        self.updateDonateCard,
+                        self._screen2.updateDonateCard,
                         child.person_name,
                         child.person_role,
                         child.person_pict
@@ -423,7 +408,7 @@ class Manager(Screen):
 
                     child.ids.pick_person_btn.bind(
                         on_release = partial(
-                            self.updateDonateCard,
+                            self._screen2.updateDonateCard,
                             child.person_name,
                             child.person_role,
                             child.person_pict
@@ -438,3 +423,6 @@ class Manager(Screen):
         self._screen2._home_page.ids.view_all_btn.bind(on_release = self.showLessPeopleSection)
         # unbind view all button untuk auto scroll
         #self._screen2.ids.view_all_btn.unbind(on_release = self.scrollToDown)
+
+    def goToPage(self, current_page, next_page):
+        pass

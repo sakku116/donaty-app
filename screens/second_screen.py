@@ -30,18 +30,23 @@ class SecondScreen(Screen):
         responsive dengan cara manual
         '''
 
+    def updateDonateCard(self, name, role, pict, *args):
+        self._home_page.ids.donate_card.person_name = name
+        self._home_page.ids.donate_card.person_role = role
+        self._home_page.ids.donate_card.person_pict = pict
+
+        self._selected_person = name
+
+        Clock.schedule_once(self.resetDonateCardForm)
+
+    def resetDonateCardForm(self, *args):
+        self._home_page.ids.donate_card.ids.money_total.text = '0'
+        self._home_page.ids.donate_card.ids.message_form.text = ''
+
     def scrollToUp(self, *args):
-        '''
-        scroll otomatis ke atas (donate card) saat tombol donate
-        di profile card di tap
-        '''
         top_element = self.ids.top_scroll_anchor
         self.ids.screen2_scrollview.scroll_to(top_element)
 
     def scrollToDown(self, *args):
-        '''
-        scroll otomatis ke bawah (person section) saat tombol
-        view all di tap
-        '''
         bottom_element = self.ids.bottom_scroll_anchor
         self.ids.screen2_scrollview.scroll_to(bottom_element)
