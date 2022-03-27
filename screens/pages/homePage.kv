@@ -1,6 +1,6 @@
 <HomePage>
     id: home_page # home_section
-    id_string: home_page
+    id_string: 'home_page'
     orientation: 'vertical'
     spacing: 45
 
@@ -11,6 +11,13 @@
     height: self.minimum_height
 
     pos_hint: {'center_x':.5}
+
+    canvas.before:
+        Color:
+            rgba: (1,1,1,1)
+        Rectangle:
+            size: self.size
+            pos: self.pos
 
     # Donate Card
     DonateCard:
