@@ -1,5 +1,5 @@
 '''
-C:/py_venv/kivy_venv/scripts/activate
+"venv/scripts/activate"
 
 [konfigurasi untuk openGl dibawah versi 2]
 import os 
@@ -12,15 +12,22 @@ Config.set('graphics', 'multisamples', '0')
 from kivy.app import App
 from kivy.core.window import Window
 from kivy.lang import Builder
+from kivy.utils import platform
+from logger import printLog
 
 class MyApp(App):
     def build(self):
         # main widget (@screen) class
         from manager import Manager
         main_widget = Builder.load_file('manager.kv')
-
-        Window.size = (384, 680)
-        Window.minimum_width, Window.minimum_height = Window.size
+        
+        printLog('platform', f'{platform}')
+        if platform == 'win':
+            Window.size = (384, 680)
+            Window.minimum_width, Window.minimum_height = Window.size
+            printLog('Window.size', f'{Window.size}')
+        elif platform == 'android':
+            pass
 
         return Manager()
 
