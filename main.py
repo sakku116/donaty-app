@@ -21,13 +21,15 @@ class MyApp(App):
         from manager import Manager
         main_widget = Builder.load_file('manager.kv')
         
+        printLog('starting', f'app is running...')
         printLog('platform', f'{platform}')
+        
         if platform == 'win':
             Window.size = (384, 680)
             Window.minimum_width, Window.minimum_height = Window.size
             printLog('Window.size', f'{Window.size}')
         elif platform == 'android':
-            pass
+            self.changeStatusBarColor()
 
         return Manager()
 
