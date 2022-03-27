@@ -13,13 +13,10 @@ class SecondScreen(Screen):
     def __init__(self, manager):
         super(SecondScreen, self).__init__()
         self.bind(size=self.updateLayoutOrientation)
-
         self._parent = manager
         self._page_container = self.ids.page_place
         self._home_page = HomePage()
         self._search_page = SearchPage()
-
-        # declare people
         self._people = [
             Person('Steven Doe', 'Content Creator', './assets/creators/steven_doe.png'),
             Person('Ze', 'Digital Artist', './assets/creators/ze.jpg'),
@@ -32,30 +29,19 @@ class SecondScreen(Screen):
             Person('Windo Anggara', 'Content Creator', './assets/creators/windo_anggara.jpg')
         ]
         self._selected_person = ''
-
         # spawn home_page first
         self._page_container.add_widget(self._home_page)
-
         # bind send_button
         self._home_page.ids.donate_card.ids.send_button.bind(on_release = self.sendDonate)
-
         # bind view all button untuk auto scroll
         self._home_page.ids.view_all_btn.bind(on_release = self.scrollToDown)
 
     def updateLayoutOrientation(self, win, size):
         width, height = size
         page_content = self._page_container.children[0]
-
         page_content.orientation = (
             'vertical' if width <= 725 else 'horizontal'
         )
-        '''
-        membuat boxlayout container ke tengah serta
-        children menjadi responsive, karena stacklayout hanya bisa
-        membuat responsive, tetapi tidak bisa dibuat ke tengah,
-        maka dari itu menggunakan boxlayout dan membuatnya
-        responsive dengan cara manual
-        '''
 
     def setup(self, *args):
         # setting tanggal
@@ -76,6 +62,18 @@ class SecondScreen(Screen):
         )
 
         Clock.schedule_once(self.showLessPeopleSection)
+
+    def getCurrentPage(self, *args):
+        return self._page_container.children[0].id_string
+
+    def goToPage(self, current_page, target_page):
+        def spawnTargetPage(*args):
+            self._page_container.add_widget(target_page)
+            # or do animation
+
+        def removeCurrentPage(*args):
+            self._page_container.remove_widget(current_page)
+            # or do animation
 
     def sendDonate(self, *args):
         person = self._home_page.ids.donate_card.person_name
