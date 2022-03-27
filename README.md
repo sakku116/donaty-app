@@ -3,7 +3,9 @@ Slicing project for bang [Andre Rio]( https://github.com/andregans )'s ui design
 
 ## Requirements
 - python > 3.6
-- kivy 2.0.0
+- kivy > 2.0.0
+- pyjnius
+(pip install `requirements.txt` to install all of the packages required)
 
 ## Issues
 This app using kivy `multisamples = 0` to avoid OpenGL 2.0 not detected error on some machines
