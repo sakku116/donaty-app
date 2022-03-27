@@ -10,6 +10,7 @@ Kivy-examples==2.1.0
 Kivy-Garden==0.1.5
 Pillow==9.0.1
 Pygments==2.11.2
+pyjnius==1.4.1
 pypiwin32==223
 pywin32==303
 requests==2.27.1
