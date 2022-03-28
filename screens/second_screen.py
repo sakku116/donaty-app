@@ -6,7 +6,7 @@ from functools import partial
 
 from .pages import HomePage, SearchPage
 from logger import printLog
-from person import Person
+import people
 from widgets import ProfileCard
 
 class SecondScreen(Screen):
@@ -17,17 +17,7 @@ class SecondScreen(Screen):
         self._page_container = self.ids.page_place
         self._home_page = HomePage()
         self._search_page = SearchPage()
-        self._people = [
-            Person('Steven Doe', 'Content Creator', './assets/creators/steven_doe.png'),
-            Person('Ze', 'Digital Artist', './assets/creators/ze.jpg'),
-            Person('Andre Rio', 'UI/UIX Designer', './assets/creators/andre_rio.jpg'),
-            Person('Ky Craft 116', 'Content Creator', './assets/creators/ky_craft_116.jpg'),
-            Person('Irwansyah Saputra', 'Influencer', './assets/creators/irwansyah_saputra.jpg'),
-            Person('Aspect30', 'Content Creator', './assets/creators/aspect30.jpg'),
-            Person('Rayen', 'Digital Artist', './assets/creators/rayen.jpg'),
-            Person('Nino', 'Digital Artist', './assets/creators/nino.jpg'),
-            Person('Windo Anggara', 'Content Creator', './assets/creators/windo_anggara.jpg')
-        ]
+        self._people = people.getList()
         self._selected_person = ''
         # spawn home_page first
         self._page_container.add_widget(self._home_page)
