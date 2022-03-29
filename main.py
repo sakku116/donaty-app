@@ -9,10 +9,19 @@ require('2.0.0')
 Config.set('graphics', 'multisamples', '0')
 '''
 
+import os
+from kivy.utils import platform
+
+if platform == 'android':
+    dpi = '170'
+else:
+    dpi = '96'
+
+os.environ['KIVY_DPI'] = dpi
+
 from kivy.app import App
 from kivy.core.window import Window
 from kivy.lang import Builder
-from kivy.utils import platform
 from logger import printLog
 
 class MyApp(App):
@@ -25,7 +34,7 @@ class MyApp(App):
         printLog('platform', f'{platform}')
         
         if platform == 'win':
-            Window.size = (384, 680)
+            Window.size = (384, 683)
             Window.minimum_width, Window.minimum_height = Window.size
             printLog('Window.size', f'{Window.size}')
         elif platform == 'android':
