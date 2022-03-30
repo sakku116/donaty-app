@@ -34,8 +34,8 @@ class FirstScreen(Screen):
 
     def removeLoginForm(self, *args):
         anim = Animation(
-            my = -.5,
-            duration = .2,
+            my = -1,
+            duration = .5,
             t = 'out_circ'
         ).start(self.ids.login_form)
 

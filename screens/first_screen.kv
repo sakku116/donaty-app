@@ -17,7 +17,7 @@
 
             BoxLayout: # scrollview container
                 orientation: 'vertical'
-                spacing: 10
+                spacing: '10dp'
 
                 size_hint: 1, None
                 height: self.minimum_height
@@ -26,8 +26,8 @@
                 BoxLayout:
                     orientation: 'vertical'
 
-                    padding: [30,20,30,10]
-                    spacing: 15
+                    padding: ['30dp','20dp','30dp','10dp']
+                    spacing: '15dp'
 
                     size_hint: 1, None
                     height: self.minimum_height
@@ -85,7 +85,7 @@
                             id: paymtd_button_container
                             orientation: 'horizontal'
                             padding: [30,0,30,0]
-                            spacing: 25
+                            spacing: '25dp'
 
                             size_hint: None, None
                             height: self.minimum_height
@@ -115,7 +115,7 @@
 
         orientation: 'vertical'
 
-        my: -.5
+        my: -1
         pos_hint: {'y':self.my}
 
         radius: 30
@@ -127,14 +127,14 @@
             RoundedRectangle:
                 size: self.size
                 pos: self.pos
-                radius: [self.radius]
+                radius: [dp(self.radius)]
 
             Color:
                 rgba: (1,1,1,1)
             RoundedRectangle:
-                size: [self.width-self.border_line, self.height-self.border_line]
-                pos: [(self.x+self.border_line/2), (self.y+self.border_line/2)]
-                radius: [self.radius-2.5]
+                size: [self.width-dp(self.border_line), self.height-dp(self.border_line)]
+                pos: [(self.x+dp(self.border_line)/2), (self.y+dp(self.border_line)/2)]
+                radius: [dp(self.radius)-2.5]
 
         Button:
             # barrier agar tidak tembus dengan button barrier di belakangnya
@@ -147,8 +147,8 @@
             orientation: 'vertical'
             pos: self.parent.pos
 
-            padding: [30,10,30,10]
-            spacing: 28
+            padding: ['30dp','10dp','30dp','10dp']
+            spacing: '28dp'
 
             Button: # Line sparator
                 id: line_sparator_login_form
@@ -176,7 +176,7 @@
 
                 BoxLayout:
                     orientation: 'vertical'
-                    spacing: 20
+                    spacing: '20dp'
 
                     size_hint: None, None
                     width: self.minimum_width
@@ -231,7 +231,7 @@
             RoundedRectangle:
                 size: self.size
                 pos: self.pos
-                radius: [20,20,0,0]
+                radius: ['20dp','20dp',0,0]
 
         GetStartedButton:
             id: get_started_btn
