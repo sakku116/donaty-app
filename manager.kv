@@ -36,7 +36,7 @@
         Color:
             rgba: (251, 251, 251, 1) # main background color
         Rectangle:
-            size: self.size
+            size: [dp(self.width), dp(self.height)]
             pos: self.pos
 
     # manager mencakup header untuk kedua screen
@@ -46,15 +46,15 @@
         id: main_container
         cols: 1
         size_hint: None, 1
-        width: root.width
+        width: dp(root.width)
         pos_hint: {'right':1}
 
         # HEADER
         BoxLayout:
-            padding: [30, 10, 30, 15]
+            padding: [dp(30), dp(10), dp(30), dp(15)]
 
             size_hint: 1, None
-            height: 54
+            height: dp(54)
 
             FloatLayout:
 
@@ -68,24 +68,24 @@
                 # donaty text & logo
                 BoxLayout:
                     orientation: 'horizontal'
-                    spacing: 8
+                    spacing: dp(8)
 
                     pos: self.parent.pos
                     pos_hint: {'center_y':.5, 'center_x':.5}
 
                     size_hint: None, 1
-                    width: self.minimum_width
+                    width: dp(self.minimum_width)
 
                     Label:
                         text: 'Donaty'
-                        font_size: 30
+                        font_size: sp(30)
                         font_name: './assets/fonts/Neuton/Neuton-Regular.ttf'
                         color: (0,0,0,1)
 
                         # untuk mendapatkan nilai minimum size dari Label
                         size_hint: None, None
-                        width: self.texture_size[0]
-                        height: self.texture_size[1]
+                        width: dp(self.texture_size[0])
+                        height: dp(self.texture_size[1])
 
                         pos_hint: {'center_y':.5, 'center_x':.5}
 
@@ -96,8 +96,8 @@
                         pos_hint: {'center_y':.5, 'center_x':.5}
 
                         size_hint: None, None
-                        width: 27
-                        height: 27
+                        width: dp(27)
+                        height: dp(27)
                         allow_stretch: True
 
                 SearchButton:
@@ -111,7 +111,7 @@
             pos: self.parent.pos
             pos_hint: {'right':1}
             size_hint_x: None
-            width: self.parent.width
+            width: dp(self.parent.width)
 
             BoxLayout:
                 id: first_screen_place
@@ -130,7 +130,7 @@
         myX: -1
 
         size_hint: None, 1
-        width: 300
+        width: dp(300)
 
         Button:
             # sebagai sidebar.
@@ -145,19 +145,19 @@
                 Color:
                     rgb: (252/255, 252/255, 252/255)
                 Rectangle:
-                    size: self.size
+                    size: [dp(self.width), dp(self.height)]
                     pos: self.pos
 
             GridLayout:
                 cols: 1
-                size: self.parent.size
+                size: [dp(self.parent.width), dp(self.parent.height)]
                 pos: self.parent.pos
 
                 # header
                 BoxLayout:
                     orientatio: 'horizontal'
                     size_hint: 1, None
-                    height: 65
+                    height: dp(65)
 
                     Button:
                         id: close_sidebar_btn
@@ -171,19 +171,19 @@
                             Color:
                                 rgba: (241/255, 241/255, 241/255, .4)
                             Rectangle:
-                                size: self.size
+                                size: [dp(self.width), dp(self.height)]
                                 pos: self.pos
 
                         BoxLayout:
                             orientation: 'horizontal'
-                            padding: 30
-                            spacing: 20
+                            padding: dp(30)
+                            spacing: dp(20)
 
                             pos: self.parent.pos
 
                             size: self.parent.size
                             size_hint: None, 1
-                            width: self.minimum_width
+                            width: dp(self.minimum_width)
 
                             #MenuButton:
                                 #feedback_size: 0
@@ -191,41 +191,41 @@
 
                             Label:
                                 text: "Close"
-                                font_size: 15
+                                font_size: sp(15)
                                 color: (0,0,0,1)
 
                                 size_hint: None, None
-                                width: self.texture_size[0]
-                                height: self.texture_size[1]
+                                width: dp(self.texture_size[0])
+                                height: dp(self.texture_size[1])
 
                                 pos_hint: {'center_y':.5}
 
                 # line separator
                 Widget:
                     size_hint: 1, None
-                    height: 2
+                    height: dp(2)
 
                     canvas.before:
                         Color:
                             rgba: (0,0,0,.4)
                         Rectangle:
                             pos: self.pos
-                            size: self.size
+                            size: [dp(self.width), dp(self.height)]
 
                 # items container
                 BoxLayout:
                     id: sidebar_items_container
                     orientation: 'vertical'
                     size_hint: 1, None
-                    height: self.minimum_height
+                    height: dp(self.minimum_height)
 
             BoxLayout:
                 id: sidebar_footer_container
                 pos: self.parent.pos
 
                 size_hint: None, None
-                width: self.parent.width
-                height: 65
+                width: dp(self.parent.width)
+                height: dp(65)
 
     FloatLayout:
         id: popup_place

@@ -1,6 +1,6 @@
 <FirstScreen>
     FloatLayout:
-        size: root.width, root.height
+        size: dp(root.width), dp(root.height)
 
         canvas.before:
             Color:
@@ -20,46 +20,46 @@
                 spacing: 10
 
                 size_hint: 1, None
-                height: self.minimum_height
+                height: dp(self.minimum_height)
 
                 # TITLE HEADER
                 BoxLayout:
                     orientation: 'vertical'
 
-                    padding: [30, 20, 30, 10]
-                    spacing: 15
+                    padding: [dp(30), dp(20), dp(30), dp(10)]
+                    spacing: dp(15)
 
                     size_hint: 1, None
-                    height: self.minimum_height
+                    height: dp(self.minimum_height)
 
                     Label:
                         text: 'Support Your Creator Anytime And Anywhere Very Easily'
                         font_name: './assets/fonts/Poppins/Poppins-Medium.ttf'
                         line_height: '1.1'
-                        font_size: '25sp'
+                        font_size: sp(25)
                         color: (0,0,0,1)
 
                         size_hint: 1, None
-                        height: self.texture_size[1]
+                        height: dp(self.texture_size[1])
 
                         # untuk mendapatkan minimum width + minimum width yang
                         # support multiline (adaptif), text_size juga
                         # perlu diberi value yang spesifik berdasarkan
                         # size_hint
 
-                        text_size: self.width, None
+                        text_size: sp(self.width), None
                         valign: 'top'
                         halign: 'left'
 
                     Label:
                         text: 'Your support is very usefull'
                         color: (0,0,0,1)
-                        font_size: '18sp'
+                        font_size: sp(18)
 
                         size_hint: 1, None
-                        height: self.texture_size[1]
+                        height: dp(self.texture_size[1])
 
-                        text_size: self.width, None
+                        text_size: sp(self.width), None
                         valign: 'top'
                         halign: 'left'
 
@@ -68,7 +68,7 @@
                     orientation: 'vertical'
 
                     size_hint: 1, None
-                    height: 85
+                    height: dp(85)
 
                     ScrollView:
                         do_scroll_x: True
@@ -79,17 +79,17 @@
                         bar_inactive_color: (1,1,1,0)
 
                         size_hint: 1, None
-                        height: paymtd_button_container.height
+                        height: dp(paymtd_button_container.height)
 
                         BoxLayout:
                             id: paymtd_button_container
                             orientation: 'horizontal'
-                            padding: [30,0,30,0]
-                            spacing: 25
+                            padding: [dp(30),dp(0),dp(30),dp(0)]
+                            spacing: dp(25)
 
                             size_hint: None, None
-                            height: self.minimum_height
-                            width: self.minimum_width
+                            height: dp(self.minimum_height)
+                            width: dp(self.minimum_width)
 
                             PaymtdLabel:
                                 text: 'PAYPAL'
@@ -111,7 +111,7 @@
     FloatLayout:
         id: login_form
         size_hint: 1, None
-        height: 448
+        height: dp(448)
 
         orientation: 'vertical'
 
@@ -125,16 +125,16 @@
             Color:
                 rgba: (0,0,0,1)
             RoundedRectangle:
-                size: self.size
+                size: [dp(self.width), dp(self.height)]
                 pos: self.pos
-                radius: [self.radius]
+                radius: [dp(self.radius)]
 
             Color:
                 rgba: (1,1,1,1)
             RoundedRectangle:
-                size: [self.width-self.border_line, self.height-self.border_line]
-                pos: [(self.x+self.border_line/2), (self.y+self.border_line/2)]
-                radius: [self.radius-2.5]
+                size: [dp(self.width)-dp(self.border_line), dp(self.height)-dp(self.border_line)]
+                pos: [(self.x+dp(self.border_line)/2), (self.y+dp(self.border_line)/2)]
+                radius: [dp(self.radius)-dp(2.5)]
 
         Button:
             # barrier agar tidak tembus dengan button barrier di belakangnya
@@ -147,15 +147,15 @@
             orientation: 'vertical'
             pos: self.parent.pos
 
-            padding: [30,10,30,10]
-            spacing: 28
+            padding: [dp(30),dp(10),dp(30),dp(10)]
+            spacing: dp(28)
 
             Button: # Line sparator
                 id: line_sparator_login_form
 
                 size_hint: None,None
-                width: 101
-                height: 4
+                width: dp(101)
+                height: dp(4)
 
                 background_color: (0,0,0,0)
                 background_normal: ''
@@ -169,18 +169,18 @@
                     RoundedRectangle:
                         size: self.size
                         pos: self.pos
-                        radius: [self.height/2]
+                        radius: [dp(self.height)/dp(2)]
 
             FloatLayout:
                 pos: self.parent.pos
 
                 BoxLayout:
                     orientation: 'vertical'
-                    spacing: 20
+                    spacing: dp(20)
 
                     size_hint: None, None
-                    width: self.minimum_width
-                    height: self.minimum_height
+                    width: dp(self.minimum_width)
+                    height: dp(self.minimum_height)
 
                     pos: self.parent.pos
                     pos_hint: {'center_x':.5, 'top':1}
@@ -188,13 +188,13 @@
                     Label:
                         text: 'Email Address'
                         font_name: './assets/fonts/Roboto/Roboto-Regular.ttf'
-                        font_size: '20sp'
+                        font_size: sp(20)
                         color: (0,0,0,1)
 
                         size_hint: 1, None
-                        height: self.texture_size[1]
+                        height: dp(self.texture_size[1])
 
-                        text_size: self.width, None
+                        text_size: sp(self.width), None
                         valign: 'center'
                         halign: 'left'
 
@@ -205,11 +205,11 @@
                     Label:
                         text: 'Password'
                         font_name: './assets/fonts/Roboto/Roboto-Regular.ttf'
-                        font_size: '20sp'
+                        font_size: sp(20)
                         color: (0,0,0,1)
 
                         size_hint: 1, None
-                        height: self.texture_size[1]
+                        height: dp(self.texture_size[1])
 
                         text_size: self.width, None
                         valign: 'center'
@@ -223,15 +223,15 @@
     # BOTTOM SPACE (floating)
     FloatLayout:
         size_hint: 1, None
-        height: 135
+        height: dp(135)
 
         canvas.before:
             Color:
                 rgba: (3/255, 41/255, 68/255, 1)
             RoundedRectangle:
-                size: self.size
+                size: [dp(self.width), dp(self.height)]
                 pos: self.pos
-                radius: [20,20,0,0]
+                radius: [dp(20),dp(20),dp(0),dp(0)]
 
         GetStartedButton:
             id: get_started_btn
@@ -240,12 +240,12 @@
         Label:
             text: 'Design by Andre Rio'
             color: (1,1,1,.1)
-            font_size: '13.5sp'
+            font_size: sp(13.5)
             font_name: './assets/fonts/Poppins/Poppins-Regular.ttf'
 
             size_hint: None, None
-            width: self.texture_size[0] + 25
-            height: self.texture_size[1] + 10
+            width: dp(self.texture_size[0]) + dp(25)
+            height: dp(self.texture_size[1]) + dp(10)
 
             text_size: None, None
             valign: 'center'
