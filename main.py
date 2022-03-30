@@ -12,10 +12,12 @@ Config.set('graphics', 'multisamples', '0')
 import os
 from kivy.utils import platform
 
+'''
 if platform == 'android':
     dpi = '170'
 else:
     dpi = '96'
+'''
 
 os.environ['KIVY_DPI'] = dpi
 
@@ -38,7 +40,8 @@ class MyApp(App):
             Window.minimum_width, Window.minimum_height = Window.size
             printLog('Window.size', f'{Window.size}')
         elif platform == 'android':
-            self.changeStatusBarColor()
+            pass
+            #self.changeStatusBarColor()
 
         return Manager()
 
