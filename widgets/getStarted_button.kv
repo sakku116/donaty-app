@@ -6,8 +6,8 @@
 
     always_release: True
     size_hint: None, None
-    width: 323
-    height: 70
+    width: '323dp'
+    height: '70dp'
 
     pos_hint: {'center_x':.5, 'center_y':.5}
 
@@ -27,7 +27,7 @@
         Widget: # bg_canvas
             size_hint: None, None
             width: self.parent.width - 14
-            height: 64
+            height: '64dp'
 
             pos: self.parent.pos
             pos_hint: {'bottom':1, 'right':1}
@@ -44,12 +44,12 @@
             id: fg_button
 
             text: self.parent.text
-            font_size: 18
+            font_size: '18sp'
             font_name: './assets/fonts/Quicksand/Quicksand-SemiBold.ttf'
 
             size_hint: None, None
             width: self.parent.width - 11
-            height: 60
+            height: '60dp'
 
             pos: self.parent.pos
             mx: 0

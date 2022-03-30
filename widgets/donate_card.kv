@@ -1,8 +1,8 @@
 <DonateCard>:
     # @FloatLayout
     size_hint: None, None
-    height: 453
-    width: 322
+    height: '453dp'
+    width: '322dp'
 
     datetime: ''
     person_name: 'Unknown'
@@ -16,7 +16,7 @@
     Widget: 
         size_hint: None, None
         width: self.parent.width - 12
-        height: 396
+        height: '396dp'
 
         pos: self.parent.pos
         pos_hint: {'bottom':1, 'right':1}
@@ -34,7 +34,7 @@
         orientation: 'horizontal'
 
         size_hint: 1, None
-        height: 72
+        height: '72dp'
 
         pos: self.parent.pos
         pos_hint: {'top':1, 'right':1}
@@ -72,13 +72,13 @@
 
                     allow_stretch: True
                     size_hint: None, None
-                    width: 32
-                    height: 32
+                    width: '32dp'
+                    height: '32dp'
         
         # Donate Text Label
         FloatLayout:
             size_hint: None, 1
-            width: 178
+            width: '178dp'
             border_line: 4
             radius: 5
 
@@ -122,7 +122,7 @@
 
         size_hint: None, None
         width: self.parent.width - 6
-        height: 396
+        height: '396dp'
 
         pos: self.parent.pos
         pos_hint: {'bottom':1}
@@ -158,8 +158,8 @@
             # Photo Profile
             Widget:
                 size_hint: None, None
-                width: 49
-                height: 49
+                width: '49dp'
+                height: '49dp'
 
                 source: root.person_pict
 
@@ -182,7 +182,7 @@
                 id: person_name_container
 
                 size_hint: None, 1
-                width: 120
+                width: '120dp'
                 
                 BoxLayout:
                     orientation: 'vertical'
@@ -206,7 +206,7 @@
                         text: root.person_name
                         color: (0,0,0,1)
                         font_name: './assets/fonts/Poppins/Poppins-Medium.ttf'
-                        font_size: 18
+                        font_size: '18sp'
                         line_height: .8
 
                         size_hint: 1, None
@@ -239,8 +239,8 @@
                     font_name: './assets/fonts/Roboto/Roboto-Medium.ttf'
 
                     size_hint: None, None
-                    width: 93
-                    height: 39
+                    width: '93dp'
+                    height: '39dp'
 
                     pos: self.parent.pos
                     pos_hint: {'right':1, 'center_y':.5}
@@ -267,7 +267,7 @@
             # Money Form
             FloatLayout: 
                 size_hint: 1, None
-                height: 46
+                height: '46dp'
                 border_line: 3
                 radius: 5
 
@@ -343,8 +343,8 @@
                         font_size: 26
 
                         size_hint: None, None
-                        width: 32
-                        height: 32
+                        width: '32dp'
+                        height: '32dp'
 
                         background_color: (0,0,0,0)
                         background_normal: ''
@@ -371,11 +371,11 @@
                     Button: # plus button
                         id: plus_money_button
                         color: (0,0,0,1)
-                        font_size: 26
+                        font_size: '26sp'
 
                         size_hint: None, None
-                        width: 32
-                        height: 32
+                        width: '32dp'
+                        height: '32dp'
 
                         background_color: (0,0,0,0)
                         background_normal: ''
@@ -400,7 +400,7 @@
             # Message Form
             BoxLayout: 
                 size_hint: 1, None
-                height: 130
+                height: '130dp'
                 border_line: 3
                 radius: 5
 

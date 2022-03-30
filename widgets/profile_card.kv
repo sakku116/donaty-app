@@ -1,7 +1,7 @@
 <ProfileCard>:
     #@FloatLayout
     size_hint: 1, None
-    height: 75
+    height: '75sp'
     
     radius: 10
     border_line: 3
@@ -37,8 +37,8 @@
 
         Widget: # photo profile
             size_hint: None, None
-            width: 49
-            height: 49
+            width: '49dp'
+            height: '49dp'
 
             source: root.person_pict
 
@@ -60,7 +60,7 @@
             id: person_name_container
 
             size_hint: None, 1
-            width: 120
+            width: '120dp'
             
             BoxLayout:
                 orientation: 'vertical'
@@ -84,7 +84,7 @@
                     text: root.person_name
                     color: (0,0,0,1)
                     font_name: './assets/fonts/Poppins/Poppins-Medium.ttf'
-                    font_size: 17
+                    font_size: '17dp'
                     line_height: .8
 
                     size_hint: 1, None
@@ -116,8 +116,8 @@
                 font_name: './assets/fonts/Roboto/Roboto-Medium.ttf'
 
                 size_hint: None, None
-                width: 93
-                height: 39
+                width: '93dp'
+                height: '39dp'
 
                 pos: self.parent.pos
                 pos_hint: {'right':1, 'center_y':.5}
