@@ -2,7 +2,6 @@ from kivy.animation import Animation
 from kivy.uix.screenmanager import Screen
 from kivy.clock import Clock
 from functools import partial
-from kivy.metrics import dp
 
 from logger import printLog
 from screens import FirstScreen, SecondScreen
@@ -39,11 +38,11 @@ class Manager(Screen):
                 #self.ids.main_container.width = width-sidebar_width
                 Animation(
                     duration = .7,
-                    width = dp(width-sidebar_width),
+                    width = width-sidebar_width,
                     t = 'out_circ'
                 ).start(self.ids.main_container)
             else:
-                self.ids.main_container.width = dp(self.width)
+                self.ids.main_container.width = self.width
 
     def goToFirstScreen(self, *args):
         def callback(*args):
