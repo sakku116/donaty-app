@@ -17,9 +17,9 @@ if platform == 'android':
     dpi = '170'
 else:
     dpi = '96'
-'''
 
 os.environ['KIVY_DPI'] = dpi
+'''
 
 from kivy.app import App
 from kivy.core.window import Window
