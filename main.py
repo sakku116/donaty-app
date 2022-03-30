@@ -26,11 +26,13 @@ from kivy.core.window import Window
 from kivy.lang import Builder
 from logger import printLog
 
-class MyApp(App):
+class main(App):
     def build(self):
+        self.title = 'Donaty'
+
         # main widget (@screen) class
-        from manager import Manager
-        main_widget = Builder.load_file('manager.kv')
+        from manager import Manager # py class
+        main_widget = Builder.load_file('manager.kv') # kv class
         
         printLog('starting', f'app is running...')
         printLog('platform', f'{platform}')
@@ -40,8 +42,10 @@ class MyApp(App):
             Window.minimum_width, Window.minimum_height = Window.size
             printLog('Window.size', f'{Window.size}')
         elif platform == 'android':
-            pass
             #self.changeStatusBarColor()
+            pass
+        else:
+            pass
 
         return Manager()
 
@@ -52,10 +56,10 @@ class MyApp(App):
         R = autoclass('android.R')
         activity = autoclass('My.PythonActivity').mActivity
 
-        window = activity.getWindow();
+        window = activity.getWindow()
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-        window.setStatusBarColor(activity.getResources().getColor(R.color.my_statusbar_color));
+        window.setStatusBarColor(activity.getResources().getColor(R.color.my_statusbar_color))
 
 if __name__ == '__main__':
-    MyApp().run()        
+    main().run()        
