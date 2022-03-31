@@ -8,7 +8,7 @@
 
     canvas.before:
         Color:
-            rgba: (241/255, 241/255, 241/255, 0 if self.state == 'normal' else .9)
+            rgba: (1,1,1,1) if self.state == 'normal' else (241/255, 241/255, 241/255, 1)
         Rectangle:
             size: self.size
             pos: self.pos
