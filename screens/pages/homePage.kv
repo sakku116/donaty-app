@@ -2,9 +2,9 @@
     id: home_page # home_section
     id_string: 'home_page'
     orientation: 'vertical'
-    spacing: 45
+    spacing: '45dp'
 
-    padding: [30, 20, 30, 10]
+    padding: ['30dp', '20dp', '30dp', '10dp']
 
     size_hint: None, None
     width: self.minimum_width
@@ -35,16 +35,16 @@
         orientation: 'vertical'
         size_hint: None, None
         height: self.minimum_height
-        width: 322
+        width: '322dp'
 
-        spacing: 15
+        spacing: '15dp'
 
         pos_hint: {'top':1}
 
         # Header
         FloatLayout:
             size_hint: 1, None
-            height: 25
+            height: '25dp'
 
             Label:
                 text: 'Follow To'
@@ -89,7 +89,7 @@
                     RoundedRectangle:
                         size: [self.width+10, self.height+10]
                         pos: [self.x - 10/2, self.y - 10/2]
-                        radius: [5]
+                        radius: [dp(5)]
 
         # Profile Card List Container
         BoxLayout:
@@ -99,7 +99,7 @@
             size_hint: 1, None
             height: self.minimum_height
 
-            spacing: 15
+            spacing: '15dp'
 
             #ProfileCard:
             #ProfileCard:

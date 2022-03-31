@@ -19,7 +19,7 @@
         # Background Canvas
         Widget:
             size_hint: None, None
-            width: self.parent.width - 10
+            width: self.parent.width - dp(10)
             height: '64dp'
 
             pos: self.parent.pos
@@ -31,7 +31,7 @@
                 RoundedRectangle:
                     size: self.size
                     pos: self.pos
-                    radius: [5]
+                    radius: [dp(5)]
 
         # Foreground Canver
         Label:
@@ -42,15 +42,15 @@
             font_name: './assets/fonts/Quicksand/Quicksand-SemiBold.ttf'
 
             size_hint: None, None
-            width: self.parent.width - 9
+            width: self.parent.width - dp(9)
             height: '60dp'
 
             pos: self.parent.pos
             mxa: self.parent.width/(9/100)
             mx: 0
             my: 1
-            border_line: 4
-            radius: 5
+            border_line: dp(4)
+            radius: dp(5)
             pos_hint: {'top':self.my, 'x':self.mx}
 
             canvas.before:
@@ -67,4 +67,4 @@
                 RoundedRectangle:
                     size: [self.width-self.border_line, self.height-self.border_line]
                     pos: [self.x+self.border_line/2, self.y+self.border_line/2]
-                    radius: [self.radius-2.5]
+                    radius: [self.radius-dp(2.5)]

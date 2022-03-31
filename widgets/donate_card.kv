@@ -27,7 +27,7 @@
             RoundedRectangle:
                 size: self.size
                 pos: self.pos
-                radius: [10]
+                radius: [dp(10)]
 
     # Card Header
     BoxLayout:
@@ -43,7 +43,7 @@
         FloatLayout:
             BoxLayout:
                 orientation: 'horizontal'
-                spacing: 5
+                spacing: '5dp'
 
                 size_hint: 1, None
                 height: self.minimum_height
@@ -88,14 +88,14 @@
                 RoundedRectangle:
                     size: self.size
                     pos: self.pos
-                    radius: [self.radius]
+                    radius: [dp(self.radius)]
 
                 Color:
                     rgba: (251/255, 202/255, 31/255, 1)
                 RoundedRectangle:
-                    size: [self.width-self.border_line, self.height-self.border_line]
-                    pos: [(self.x+self.border_line/2), (self.y+self.border_line/2)]
-                    radius: [self.radius-2.5]
+                    size: [self.width-dp(self.border_line), self.height-dp(self.border_line)]
+                    pos: [(self.x+dp(self.border_line)/2), (self.y+dp(self.border_line)/2)]
+                    radius: [dp(self.radius)-dp(2.5)]
 
             Label:
                 text: 'Donate'
@@ -117,8 +117,8 @@
     # Foreground Card
     GridLayout:
         cols: 1
-        padding: [20,25,20,20]
-        spacing: 19
+        padding: ['20dp','25dp','20dp','20dp']
+        spacing: '19dp'
 
         size_hint: None, None
         width: self.parent.width - 6
@@ -136,14 +136,14 @@
             RoundedRectangle:
                 size: self.size
                 pos: self.pos
-                radius: [self.radius]
+                radius: [dp(self.radius)]
 
             Color:
                 rgba: (1,1,1,1)
             RoundedRectangle:
-                size: [self.width-self.border_line, self.height-self.border_line]
-                pos: [(self.x+self.border_line/2), (self.y+self.border_line/2)]
-                radius: [self.radius-2.5]
+                size: [self.width-dp(self.border_line), self.height-dp(self.border_line)]
+                pos: [(self.x+dp(self.border_line)/2), (self.y+dp(self.border_line)/2)]
+                radius: [dp(self.radius)-dp(2.5)]
         
         # Profile Section
         BoxLayout:
@@ -151,7 +151,7 @@
             #width: self.minimum_width
             height: self.minimum_height
 
-            spacing: 9
+            spacing: '9dp'
 
             pos: self.parent.pos
             
@@ -254,12 +254,12 @@
                         RoundedRectangle:
                             size: self.size
                             pos: self.pos
-                            radius: [5]
+                            radius: [dp(5)]
         
         # Form
         BoxLayout:
             orientation: 'vertical'
-            spacing: 13
+            spacing: '13dp'
 
             size_hint: 1, None
             height: self.minimum_height
@@ -282,9 +282,9 @@
                     Color:
                         rgba: (1,1,1,1)
                     RoundedRectangle:
-                        size: [self.width-self.border_line, self.height-self.border_line]
-                        pos: [(self.x+self.border_line/2), (self.y+self.border_line/2)]
-                        radius: [self.radius-2.5]
+                        size: [self.width-dp(self.border_line), self.height-dp(self.border_line)]
+                        pos: [(self.x+dp(self.border_line)/2), (self.y+dp(self.border_line)/2)]
+                        radius: [self.radius-dp(2.5)]
 
                 BoxLayout:
                     orientation: 'horizontal'
@@ -293,8 +293,8 @@
 
                     pos: self.parent.pos
 
-                    padding: [12,0,0,0]
-                    spacing: 10
+                    padding: ['12dp',0,0,0]
+                    spacing: '10dp'
 
                     Label:
                         text: '$'
@@ -334,13 +334,13 @@
                     pos: self.parent.pos
                     pos_hint: {'right':1, 'center_y':.5}
 
-                    padding: [0,0,12,0]
-                    spacing: 11
+                    padding: [0,0,'12dp',0]
+                    spacing: '11dp'
 
                     Button:
                         id: minus_money_button
                         color: (0,0,0,1)
-                        font_size: 26
+                        font_size: '26sp'
 
                         size_hint: None, None
                         width: '32dp'
@@ -393,7 +393,7 @@
                             Color:
                                 rgba: (244/255, 244/255, 244/255, 1)
                             Ellipse:
-                                size: [20, 20]
+                                size: [dp(20), dp(20)]
                                 pos: [self.center_x - 10, self.center_y - 10]
                                 source: './assets/plus.png'
             
@@ -410,14 +410,14 @@
                     RoundedRectangle:
                         size: self.size
                         pos: self.pos
-                        radius: [self.radius]
+                        radius: [dp(self.radius)]
 
                     Color:
                         rgba: (1,1,1,1)
                     RoundedRectangle:
-                        size: [self.width-self.border_line, self.height-self.border_line]
-                        pos: [(self.x+self.border_line/2), (self.y+self.border_line/2)]
-                        radius: [self.radius-2.5]
+                        size: [self.width-dp(self.border_line), self.height-dp(self.border_line)]
+                        pos: [(self.x+dp(self.border_line)/2), (self.y+dp(self.border_line)/2)]
+                        radius: [dp(self.radius)-dp(2.5)]
 
                 TextInput:
                     id: message_form

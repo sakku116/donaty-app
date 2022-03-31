@@ -26,7 +26,7 @@
 
         size_hint: None, None
         width: self.parent.width
-        height: self.parent.height - 20
+        height: self.parent.height - dp(20)
 
         FloatLayout:
             pos: self.parent.pos
@@ -34,7 +34,7 @@
 
             size: self.parent.size
 
-            elevation: 10
+            elevation: dp(10)
 
             # bg canvas
             Widget:
@@ -51,7 +51,7 @@
                     RoundedRectangle:
                         size: self.size
                         pos: self.pos
-                        radius: [root.radius]
+                        radius: [dp(root.radius)]
 
             # fg canvas
             Label:
@@ -70,19 +70,19 @@
                     RoundedRectangle:
                         size: self.size
                         pos: self.pos
-                        radius: [root.radius]
+                        radius: [dp(root.radius)]
 
                     # main canvas
                     Color:
                         rgba: root.canvas_color
                     RoundedRectangle:
-                        size: [self.width-root.border_line, self.height-root.border_line]
-                        pos: [self.x+root.border_line/2, self.y+root.border_line/2]
-                        radius: [root.radius-2.5]
+                        size: [self.width-dp(root.border_line), self.height-dp(root.border_line)]
+                        pos: [self.x+dp(root.border_line)/2, self.y+dp(root.border_line)/2]
+                        radius: [dp(root.radius)-dp(2.5)]
 
         BoxLayout:
             orientation: 'vertical'
-            padding: 20
+            padding: dp(20)
 
             pos: self.parent.pos
             size: self.parent.size

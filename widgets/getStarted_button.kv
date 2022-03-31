@@ -26,7 +26,7 @@
 
         Widget: # bg_canvas
             size_hint: None, None
-            width: self.parent.width - 14
+            width: self.parent.width - dp(14)
             height: '64dp'
 
             pos: self.parent.pos
@@ -38,7 +38,7 @@
                 RoundedRectangle:
                     size: self.size
                     pos: self.pos
-                    radius: [5]
+                    radius: [dp(5)]
 
         Label: # fg_canvas
             id: fg_button
@@ -48,7 +48,7 @@
             font_name: './assets/fonts/Quicksand/Quicksand-SemiBold.ttf'
 
             size_hint: None, None
-            width: self.parent.width - 11
+            width: self.parent.width - dp(11)
             height: '60dp'
 
             pos: self.parent.pos
@@ -69,15 +69,15 @@
                 RoundedRectangle:
                     size: self.size
                     pos: self.pos
-                    radius: [self.radius]
+                    radius: [dp(self.radius)]
 
                 # main canvas
                 Color:
                     rgba: self.mcolor
                 RoundedRectangle:
-                    size: [self.width-self.border_line, self.height-self.border_line]
-                    pos: [self.x+self.border_line/2, self.y+self.border_line/2]
-                    radius: [self.radius-2.5]
+                    size: [self.width-dp(self.border_line), self.height-dp(self.border_line)]
+                    pos: [self.x+dp(self.border_line)/2, self.y+dp(self.border_line)/2]
+                    radius: [dp(self.radius)-dp(2.5)]
 
                 #Color:
                 #    rgba: (0,0,0,1)

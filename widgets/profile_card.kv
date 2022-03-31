@@ -16,21 +16,21 @@
         RoundedRectangle:
             size: self.size
             pos: self.pos
-            radius: [self.radius]
+            radius: [dp(self.radius)]
             
         Color:
             rgba: (244/255, 244/255, 244/255, 1)
         RoundedRectangle:
-            size: [(self.width-self.border_line), (self.height-self.border_line)]
-            pos: [(self.x+self.border_line/2), (self.y+self.border_line/2)]
-            radius: [self.radius-2.5]
+            size: [(self.width-dp(self.border_line)), (self.height-dp(self.border_line))]
+            pos: [(self.x+dp(self.border_line)/2), (self.y+dp(self.border_line)/2)]
+            radius: [dp(self.radius)-dp(2.5)]
 
     BoxLayout: # profile section
         size_hint: 1, None
         height: self.minimum_height
 
-        spacing: 9
-        padding: [20,0,20,0]
+        spacing: '9dp'
+        padding: ['20dp',0,'20dp',0]
 
         pos: self.parent.pos
         pos_hint: {'center_x':.5, 'center_y':.5}
@@ -133,6 +133,6 @@
                     RoundedRectangle:
                         size: self.size
                         pos: self.pos
-                        radius: [5]
+                        radius: [dp(5)]
 
         
