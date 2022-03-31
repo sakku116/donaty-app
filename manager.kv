@@ -54,7 +54,7 @@
             padding: ['30dp', '10dp', '30dp', '15dp']
 
             size_hint: 1, None
-            height: '54dp'
+            height: '65dp'
 
             FloatLayout:
 
@@ -129,7 +129,7 @@
         # -1 for unspawned
         myX: -1
 
-        size_hint: None, 1
+        size_hint_x: None
         width: '300dp'
 
         Button:
@@ -174,20 +174,15 @@
                                 size: self.size
                                 pos: self.pos
 
-                        BoxLayout:
-                            orientation: 'horizontal'
+                        FloatLayout:
                             padding: '30dp'
                             spacing: '20dp'
 
                             pos: self.parent.pos
 
-                            size: self.parent.size
-                            size_hint: None, 1
-                            width: self.minimum_width
-
-                            #MenuButton:
-                                #feedback_size: 0
-                                #pos_hint: {'center_y':.5}
+                            size_hint: None, None
+                            height: self.parent.height
+                            width: self.parent.width - dp(30)
 
                             Label:
                                 text: "Close"
@@ -198,7 +193,8 @@
                                 width: self.texture_size[0]
                                 height: self.texture_size[1]
 
-                                pos_hint: {'center_y':.5}
+                                pos: self.parent.pos
+                                pos_hint: {'center_y':.5, 'right':1}
 
                 # line separator
                 Widget:
