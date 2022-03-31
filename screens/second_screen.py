@@ -30,7 +30,7 @@ class SecondScreen(Screen):
         width, height = size
         page_content = self._page_container.children[0]
         page_content.orientation = (
-            'vertical' if width <= 725 else 'horizontal'
+            'vertical' if width <= 760 else 'horizontal'
         )
 
     def setup(self, *args):
@@ -51,7 +51,9 @@ class SecondScreen(Screen):
             random_choosen_person.photo_path
         )
 
-        Clock.schedule_once(self.showLessPeopleSection)
+        # reset list dari person card
+        self._home_page.ids.profile_card_container.clear_widgets()
+        self.showLessPeopleSection()
 
     def getCurrentPage(self, *args):
         return self._page_container.children[0].id_string
