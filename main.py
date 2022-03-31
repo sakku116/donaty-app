@@ -9,17 +9,7 @@ require('2.0.0')
 Config.set('graphics', 'multisamples', '0')
 '''
 
-import os
 from kivy.utils import platform
-
-'''
-if platform == 'android':
-    dpi = '170'
-else:
-    dpi = '96'
-
-os.environ['KIVY_DPI'] = dpi
-'''
 
 from kivy.app import App
 from kivy.core.window import Window
