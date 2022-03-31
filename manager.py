@@ -24,10 +24,9 @@ class Manager(Screen):
         # set sidebar screen state
         self.sidebarConfig('for_screen1')
 
-    def updateLayout(self, win, size):
+    def updateLayout(self, win, size, *args):
         width, height = size
 
-        sidebar_width = self.ids.sidebar.width
 
         if width <= 725:
             pass
@@ -36,11 +35,13 @@ class Manager(Screen):
                 # ubah layout dengan mengurangi width dari screens_place
                 # dan membuatnya stuck ke kanan (bisa dilakukan karena parentnya adalah floatlayout)
                 #self.ids.main_container.width = width-sidebar_width
-                Animation(
-                    duration = .7,
-                    width = width-sidebar_width,
-                    t = 'out_circ'
-                ).start(self.ids.main_container)
+                self.ids.main_container.width -= self.ids.sidebar.width
+                
+                #Animation(
+                #    duration = .7,
+                #    width = width-sidebar_width,
+                #    t = 'out_circ'
+                #).start(self.ids.main_container)
             else:
                 self.ids.main_container.width = self.width
 
@@ -141,7 +142,11 @@ class Manager(Screen):
         self._sidebar_shown_state = True
         printLog('sidebar', 'Showed')
 
-        self.updateLayout(None, self.size)
+        anim.bind(on_complete=
+            partial(
+                self.updateLayout, None, self.size
+            )
+        )
 
     def closeSidebar(self, *args):
         anim = Animation(
