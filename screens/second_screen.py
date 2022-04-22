@@ -20,7 +20,10 @@ class SecondScreen(Screen):
         self._page_container = self.ids.page_place
         self._home_page = HomePage(self)
         self._search_page = SearchPage(self)
+
         self.bottomNavbarSetup()
+        self._page_list = [self._home_page, self._search_page]
+        #self._current_page = self._page_container.children[0]
 
         # spawn home_page first
         self._page_container.add_widget(self._home_page)
@@ -63,7 +66,11 @@ class SecondScreen(Screen):
 
         def spawnTargetPage(*args):
             self._page_container.add_widget(target_page)
-            # or do animation
+            if self._page_list.index(target_page) > self._page_list.index(current_page):
+                printLog('page index', 'target_page index > current_page index')
+                
+            elif self._page_list.index(target_page) < self._page_list.index(current_page):
+                printLog('page index', 'target_page index < current_page index')
 
         def removeCurrentPage(*args):
             self._page_container.remove_widget(current_page)
