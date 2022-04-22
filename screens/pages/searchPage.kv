@@ -1,14 +1,32 @@
 <SearchPage>:
     id: search_page
     id_string: 'search_page'
+    orientation: 'vertical'
+
+    spacing: '45dp'
+    padding: ['30dp', '20dp', '30dp', '10dp']
+
+    size_hint: 1, None
+    height: self.minimum_height
+
+    pos_hint: {'center_x':.5}
 
     canvas.before:
         Color:
             rgba: (1,1,1,1)
         Rectangle:
-            pos: self.pos
             size: self.size
+            pos: self.pos
+        
+        Color:
+            rgba: (0,0,0,1)
+        Line:
+            width: 3
+            rectangle: self.x, self.y, self.width, self.height
 
     Label:
         text: "search page"
         color: (0,0,0,1)
+
+        size_hint_y: None
+        height: '200dp'
