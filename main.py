@@ -2,12 +2,12 @@
 "venv/scripts/activate"
 
 [konfigurasi untuk openGl dibawah versi 2]
+'''
 import os 
 os.environ['KIVY_GL_BACKEND'] = 'angle_sdl2'
 from kivy import Config, require
 require('2.0.0')
 Config.set('graphics', 'multisamples', '0')
-'''
 
 from kivy.utils import platform
 
