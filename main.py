@@ -52,4 +52,4 @@ class main(App):
         window.setStatusBarColor(activity.getResources().getColor(R.color.my_statusbar_color))
 
 if __name__ == '__main__':
-    main().run()        
+    main().run()
